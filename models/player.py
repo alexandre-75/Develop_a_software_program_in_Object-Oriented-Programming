@@ -13,5 +13,3 @@ class Player():
             "national_chess_identifier" : self.national_chess_identifier,
         }
         return information
-
-
