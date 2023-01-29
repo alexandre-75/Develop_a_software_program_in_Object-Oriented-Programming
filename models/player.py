@@ -1,15 +1,21 @@
 class Player():
-    def __init__(self, first_name, surname, date_of_birth, national_chess_identifier):
+    def __init__(self, first_name, surname, date_of_birth,):
         self.first_name = first_name
         self.surname = surname
         self.date_of_birth = date_of_birth
-        self.national_chess_identifier = national_chess_identifier
     
-    def player_personal_information (self):
-        information = {
-            "first_name" : self.first_name,
-            "surname" : self.surname,
-            "date_of_birth" : self.date_of_birth,
-            "national_chess_identifier" : self.national_chess_identifier,
-        }
-        return information
+    def __repr__(self):
+        return f"Player({self.first_name}, {self.surname}, {self.date_of_birth})"
+
+    def __str__(self):
+        return f"(first name : {self.first_name}\n surname : {self.surname}\n date of birth : {self.date_of_birth})"
+    
+
+from faker import Faker
+fake = Faker(locale="fr_FR")
+
+for _ in range(10):
+    player = Player(first_name = fake.first_name(), surname = fake.last_name(), date_of_birth = fake.date_of_birth())
+    print(repr(player))
+    print("-" * 10)
+    # print(player)
