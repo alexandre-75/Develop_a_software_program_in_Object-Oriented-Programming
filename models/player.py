@@ -4,7 +4,7 @@ from tinydb import TinyDB
 
 class Player():
     
-    DB = TinyDB('database/players.json', indent=4)
+    db_player = TinyDB('database/players.json', indent=4)
 
     def __init__(self, first_name, surname, date_of_birth):
         self.first_name = first_name
@@ -38,10 +38,10 @@ class Player():
         except:
             raise ValueError("Invalid format. Use YYYY-MM-DD")
     
-    def save(self, validate_data = False):
+    def save_player_in_db(self, validate_data = False):
         if validate_data:
             self.checks()
-        return Player.DB.insert({"first_name":self.first_name, "surname":self.surname, "birth":self.date_of_birth})
+        return Player.db_player.insert({"first_name":self.first_name, "surname":self.surname, "birth":self.date_of_birth})
 
 
 from faker import Faker
@@ -54,4 +54,4 @@ for _ in range(10):
     # print(repr(player))
     # print("-" * 10)
     # print(string.punctuation)
-    # print(player.save(validate_data = True))
+    # print(player.save_player_in_db(validate_data = True))
