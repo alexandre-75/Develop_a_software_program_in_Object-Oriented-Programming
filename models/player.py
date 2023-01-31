@@ -46,7 +46,6 @@ class Player():
 
 from faker import Faker
 fake = Faker(locale="fr_FR")
-
 for _ in range(10):
     player = Player(first_name = fake.first_name(), surname = fake.last_name(), date_of_birth = fake.date_of_birth())
     player._check_first_name_and_surname()

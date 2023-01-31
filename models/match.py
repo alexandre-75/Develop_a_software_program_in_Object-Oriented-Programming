@@ -12,9 +12,7 @@ class Match():
 
     
     def save_match_in_db(self):
-        match_json_format = {
-            "match_result": self.match_result
-        }
+        match_json_format = {"match_result": self.match_result}
         return Match.db_match.insert(match_json_format)
 
 
