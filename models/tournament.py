@@ -14,6 +14,12 @@ class Tournament():
         self.current_round = current_round
         self.general_remarks = general_remarks
 
+    def __repr__(self):
+        return f"Tournament({self.tournament_name}, {self.tournament_site})"
+
+    def __str__(self):
+        return f"(tournament name : {self.tournament_name}\n tournament_site : {self.tournament_site})"
+
     def format_tournament_data(self):
         """Return tournament info as a dictionary"""
         return {
@@ -43,4 +49,10 @@ for _ in range(10):
         start_date = fake.date_this_century(),
         end_date = fake.date_this_century(),
         current_round = fake.random_element(elements=scores))
-    print(tournament.save_tournament_in_db())
+    # print(tournament.save_tournament_in_db())
+    # print(repr(tournament))
+    # print(tournament)
+    # print(tournament.__str__())
+    # print(tournament.__repr__())
+    # print(tournament.format_tournament_data())
+    print("-"*10)

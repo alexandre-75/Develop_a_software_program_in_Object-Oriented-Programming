@@ -1,7 +1,8 @@
 from tinydb import TinyDB
 
 class Match():
-    db_match = TinyDB('database/match.json', indent=4)
+
+    db_match = TinyDB("database/match.json", indent=4)
 
     def __init__(self, player_1, score_player_1, player_2, score_player_2):
         self.player_1 = player_1
@@ -9,8 +10,7 @@ class Match():
         self.player_2 = player_2
         self.score_player_2 = score_player_2
         self.match_result = ([player_1, score_player_1], [player_2, score_player_2])
-
-    
+ 
     def save_match_in_db(self):
         match_json_format = {"match_result": self.match_result}
         return Match.db_match.insert(match_json_format)
