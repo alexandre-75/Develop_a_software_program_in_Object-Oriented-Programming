@@ -16,28 +16,40 @@ class Player():
     # L'avantage de définir db_player dans la classe est que vous pouvez utiliser une seule instance de TinyDB pour toutes les instances de la classe
     # The advantage of defining db_player in the class is that you can use a single instance of TinyDB for all instances of the class
 
-    def __init__(self, first_name, surname, date_of_birth):
+    def __init__(self, first_name, surname, date_of_birth, p_id): 
         self.first_name = first_name
         self.surname = surname
         self.date_of_birth = str(date_of_birth)
-    
+        self.p_id = str(p_id)
+
     def __repr__(self):
-        return f"Player({self.first_name}, {self.surname}, {self.date_of_birth})"
+        return f"Player({self.first_name}, {self.surname}, {self.p_id})"
 
     def __str__(self):
-        return f"(first name : {self.first_name}\n surname : {self.surname}\n date of birth : {self.date_of_birth})"
+        return f"(first name : {self.first_name}\n surname : {self.surname}\n ID : {self.p_id})"
 
     def save_player_in_db(self, validate_data = False):
         if validate_data:
             self.checks()
-        return Player.db_player.insert({"first_name":self.first_name, "surname":self.surname, "birth":self.date_of_birth})
+        return Player.db_player.insert({"p_id":self.p_id,
+                                        "first_name":self.first_name,
+                                        "surname":self.surname, 
+                                        "birth":self.date_of_birth})
 
-    def search_player_in_db(self, first_name):
+    def search_player_in_db(self, p_id):
         players_db = TinyDB('database/players.json')
-        result = players_db.search(where('first_name') == first_name)   # Search in the database, the player corresponding to the name provided as input.
+        result = players_db.search(where("p_id") == p_id)   # Search in the database, the player corresponding to the iD provided as input.
         if result:
             return result[0]
-        return None
+        return "no player in db"
+    
+    def update_player_data(self, key, value, p_id):
+        # db horizontal?
+        players_db = TinyDB('database/players.json')
+        player = self.search_player_in_db(p_id)
+        if player:
+            return players_db.update({key: value}, where("p_id") == p_id)    
+        return "erreur dans les paramètres"
 
     @staticmethod   # can be called without creating an instance of the class
     def load_all_player_in_db():
@@ -68,14 +80,21 @@ class Player():
 
 from faker import Faker
 fake = Faker(locale="fr_FR")
-for _ in range(1):
-    player = Player(first_name = fake.first_name(), surname = fake.last_name(), date_of_birth = fake.date_of_birth())
+scores = [1, 2, 3, 4]
+for _ in range(10):
+    player = Player(first_name = fake.first_name(), 
+                    surname = fake.last_name(), 
+                    date_of_birth = fake.date_of_birth(), 
+                    p_id = fake.random_element(elements=scores))
     # player._check_first_name_and_surname()
     # player._check_date_of_birth()
     # print(repr(player))
     # print("-" * 10)
     # print(string.punctuation)
     # print(player.save_player_in_db(validate_data = True))
+    # print(player.update_player_data("surname", "ale", "2"))
     # print(player.load_all_player_in_db())
-    # print(player.search_player_in_db("Constance"))
+    # print(player.search_player_in_db("2"))
+
+
 
