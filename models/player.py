@@ -42,7 +42,8 @@ class Player():
         if result:
             return result[0]
         return "no player in db"
-    
+
+    # @staticmethod
     def update_player_data(self, key, value, p_id):
         # db horizontal?
         players_db = TinyDB('database/players.json')
@@ -92,7 +93,7 @@ for _ in range(10):
     # print("-" * 10)
     # print(string.punctuation)
     # print(player.save_player_in_db(validate_data = True))
-    # print(player.update_player_data("surname", "ale", "2"))
+    # print(player.update_player_data("surname", "ale", "1"))
     # print(player.load_all_player_in_db())
     # print(player.search_player_in_db("2"))
 

@@ -11,6 +11,12 @@ class Match():
         self.score_player_2 = score_player_2
         self.match_result = ([player_1, score_player_1], [player_2, score_player_2])
  
+    def __str__(self):
+        return f"{self.player_1} contre {self.player_2}"
+
+    def __repr__(self):
+        return f"Match({self.player_1}, {self.player_2})"
+
     def save_match_in_db(self):
         match_json_format = {"match_result": self.match_result}
         return Match.db_match.insert(match_json_format)
