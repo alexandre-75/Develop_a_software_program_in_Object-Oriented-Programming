@@ -22,32 +22,39 @@ class Player():
         self.date_of_birth = str(date_of_birth)
         self.p_id = str(p_id)
 
+    def __str__(self):
+            return f"(first name: {self.first_name}\n surname: {self.surname}\n ID: {self.p_id})"
+
     def __repr__(self):
         return f"Player({self.first_name}, {self.surname}, {self.p_id})"
-
-    def __str__(self):
-        return f"(first name : {self.first_name}\n surname : {self.surname}\n ID : {self.p_id})"
+    
+    def format_player_data(self):
+        """Return player info as a dictionary"""
+        return {"p_id":self.p_id,
+                "first_name":self.first_name,
+                "surname":self.surname, 
+                "birth":self.date_of_birth    
+        }
 
     def save_player_in_db(self, validate_data = False):
         if validate_data:
             self.checks()
-        return Player.db_player.insert({"p_id":self.p_id,
-                                        "first_name":self.first_name,
-                                        "surname":self.surname, 
-                                        "birth":self.date_of_birth})
+        return self.db_player.insert(self.format_player_data())
 
-    def search_player_in_db(self, p_id):
+    @staticmethod
+    def search_player_in_db( p_id):
         players_db = TinyDB('database/players.json')
         result = players_db.search(where("p_id") == p_id)   # Search in the database, the player corresponding to the iD provided as input.
         if result:
             return result[0]
         return "no player in db"
 
-    # @staticmethod
-    def update_player_data(self, key, value, p_id):
+    @staticmethod
+    def update_player_data( key, value, p_id):
         # db horizontal?
         players_db = TinyDB('database/players.json')
-        player = self.search_player_in_db(p_id)
+        player = Player.search_player_in_db(p_id)
+        print(player)
         if player:
             return players_db.update({key: value}, where("p_id") == p_id)    
         return "erreur dans les paramètres"
@@ -79,21 +86,21 @@ class Player():
             raise ValueError("Invalid format. Use YYYY-MM-DD")
     
 
-from faker import Faker
-fake = Faker(locale="fr_FR")
-scores = [1, 2, 3, 4]
-for _ in range(10):
-    player = Player(first_name = fake.first_name(), 
-                    surname = fake.last_name(), 
-                    date_of_birth = fake.date_of_birth(), 
-                    p_id = fake.random_element(elements=scores))
+# from faker import Faker
+# fake = Faker(locale="fr_FR")
+# scores = [1, 2, 3, 4]
+# for _ in range(10):
+#     player = Player(first_name = fake.first_name(), 
+#                     surname = fake.last_name(), 
+#                     date_of_birth = fake.date_of_birth(), 
+#                     p_id = fake.random_element(elements=scores))
     # player._check_first_name_and_surname()
     # player._check_date_of_birth()
     # print(repr(player))
     # print("-" * 10)
     # print(string.punctuation)
     # print(player.save_player_in_db(validate_data = True))
-    # print(player.update_player_data("surname", "ale", "1"))
+# print(Player.update_player_data("surname", "ale", "1"))
     # print(player.load_all_player_in_db())
     # print(player.search_player_in_db("2"))
 
