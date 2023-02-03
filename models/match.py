@@ -2,51 +2,50 @@ from tinydb import TinyDB
 
 class Match():
 
-    db_match = TinyDB("database/match.json", indent=4)
-
-    def __init__(self, m_id, player_1, score_player_1, player_2, score_player_2):
-        self.m_id = m_id
+    matches_database = TinyDB("database/matches.json", indent=4)
+  
+    def __init__(self, match_id, player_1, score_p1, player_2, score_p2):
+        self.match_id = match_id
         self.player_1 = player_1
-        self.score_player_1 = score_player_1
+        self.score_p1 = score_p1
         self.player_2 = player_2
-        self.score_player_2 = score_player_2  
-        self.match_result = ([player_1, score_player_1], [player_2, score_player_2])   # single match stored as a tuple containing two lists
- 
+        self.score_p2 = score_p2  
+        self.result = ([player_1, score_p1], [player_2, score_p2])   # single match stored as a tuple containing two lists
+
     def __str__(self):
-        return f"match ID:{self.m_id}\n {self.player_1} contre {self.player_2}"
+        return f"Match ID:{self.match_id}\n {self.player_1} vs {self.player_2}"
 
     def __repr__(self):
         return f"Match({self.player_1}, {self.player_2})"
 
-    def format_match_data(self):
-        return {"match_ID": self.m_id,
-                "match_result": self.match_result}
+    def format_match_in_data(self):
+        return {"match_id": self.match_id,
+                "result": self.result
+        }
 
-    def save_match_in_db(self):
-            return self.db_match.insert(self.format_match_data())
+    def save_match_in_database(self):
+            return self.matchs_database.insert(self.format_match_in_data())
  
-    @staticmethod
-    def search_match_in_db(m_id):
-        match_db = TinyDB('database/match.json')
-        result = match_db.search(where("m_id") == m_id)   # Search in the database, the match corresponding to the iD provided as input.
-        if result:
-            return result[0]
-        return "no match in db"
-
-    @staticmethod
-    def update_match_data( key, value, m_id):
-        # db horizontal?
-        match_db = TinyDB('database/players.json')
-        match = Match.search_match_in_db(p_id)
-        # print(match)
-        if match:
-            return match_db.update({key: value}, where("m_id") == m_id)    
-        return "erreur dans les paramètres"
-
     @staticmethod   # can be called without creating an instance of the class
-    def load_all_match_in_db():
-        match_db = TinyDB('database/match.json')
-        return match_db.all()
+    def find_match_in_database(match_id):
+        matches_database = TinyDB('database/matches.json')
+        result = matches_database.search(where("match_id") == match_id)   # Search in the database, the match corresponding to the id provided as input.
+        if result == True:
+            return result[0]
+        return "No match in database"
+
+    @staticmethod
+    def update_match_in_database(key, value, match_id):
+        matches_database = TinyDB('database/matches.json')
+        match = self.find_match_in_database(match_id)
+        if match == True:
+            return matches_database.update({key:value}, where("match_id") == match_id)    
+        return "Error in parameters"
+
+    @staticmethod
+    def load_all_matches_from_db():
+        matches_database = TinyDB('database/matches.json')
+        return matches_database.all()
 
 
 # from faker import Faker

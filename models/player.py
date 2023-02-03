@@ -1,89 +1,83 @@
-import string
-from datetime import datetime
 from tinydb import TinyDB, Query, where
-"""
-TinyDB est une bibliothèque Python pour le stockage de données de petite taille de manière simple et rapide.
-
-Query est une classe qui permet d'exécuter des requêtes complexes sur les données stockées dans TinyDB.
-
-where est une fonction qui peut être utilisée pour filtrer les données stockées dans TinyDB en fonction d'un critère spécifié.
-"""
-
+import string
 
 class Player():
     
-    db_player = TinyDB("database/players.json", indent=4)
-    # L'avantage de définir db_player dans la classe est que vous pouvez utiliser une seule instance de TinyDB pour toutes les instances de la classe
-    # The advantage of defining db_player in the class is that you can use a single instance of TinyDB for all instances of the class
+    players_database = TinyDB("database/players.json", indent=4)
 
-    def __init__(self, first_name, surname, date_of_birth, p_id): 
+    def __init__(self, first_name, last_name, date_of_birth, player_id): 
         self.first_name = first_name
-        self.surname = surname
+        self.last_name = last_name
         self.date_of_birth = str(date_of_birth)
-        self.p_id = str(p_id)
+        self.player_id = str(player_id)
 
     def __str__(self):
-            return f"(first name: {self.first_name}\n surname: {self.surname}\n ID: {self.p_id})"
+            return f"(First name: {self.first_name}\n Last name: {self.last_name}\n ID: {self.player_id})"
 
     def __repr__(self):
-        return f"Player({self.first_name}, {self.surname}, {self.p_id})"
+        return f"Player({self.first_name}, {self.last_name}, {self.player_id})"
     
-    def format_player_data(self):
-        """Return player info as a dictionary"""
-        return {"p_id":self.p_id,
+    def format_player_in_database(self):
+        return {"player_id":self.player_id,
                 "first_name":self.first_name,
-                "surname":self.surname, 
-                "birth":self.date_of_birth    
+                "last_name":self.last_name, 
+                "birth_date":self.date_of_birth
         }
 
-    def save_player_in_db(self, validate_data = False):
+    def save_player_in_database(self, validate_data = False):
         if validate_data:
             self.checks()
-        return self.db_player.insert(self.format_player_data())
-
-    @staticmethod
-    def search_player_in_db( p_id):
-        players_db = TinyDB('database/players.json')
-        result = players_db.search(where("p_id") == p_id)   # Search in the database, the player corresponding to the iD provided as input.
-        if result:
-            return result[0]
-        return "no player in db"
-
-    @staticmethod
-    def update_player_data( key, value, p_id):
-        # db horizontal?
-        players_db = TinyDB('database/players.json')
-        player = Player.search_player_in_db(p_id)
-        print(player)
-        if player:
-            return players_db.update({key: value}, where("p_id") == p_id)    
-        return "erreur dans les paramètres"
+        return self.players_database.insert(self.format_player_in_database())
 
     @staticmethod   # can be called without creating an instance of the class
-    def load_all_player_in_db():
-        players_db = TinyDB('database/players.json')
-        return players_db.all()
-    
-    def checks(self):
-        self._check_first_name_and_surname()
-        self._check_date_of_birth()
+    def find_player_in_database(player_id):
+        players_database = TinyDB('database/players.json')
+        result = players_database.search(where("player_id") == player_id)   # Search in the database, the player corresponding to the id provided as input.
+        if result== True:
+            return result[0]
+        return "No player found in database"
 
-    def _check_first_name_and_surname(self):
+    @staticmethod
+    def update_player_in_database(key, value, player_id):
+        players_database = TinyDB('database/players.json')
+        player = Player.find_player_in_database(player_id)
+        if player == True:
+            return players_database.update({key:value}, where("player_id") == player_id)    
+        return "error in parameters"
+
+    @staticmethod
+    def load_all_players_from_database():
+        players_database = TinyDB('database/players.json')
+        return players_database.all()
+    
+    def validate_player_data(self):
+        self.validate_player_first_name_and_last_name()
+        self.validate_player_date_of_birth()
+        self.validate_player_id()
+
+    def validate_player_first_name_and_last_name(self):
         special_characters = string.punctuation + string.digits
-        if not (self.first_name and self.surname):
+        if not (self.first_name and self.last_name):
             raise ValueError("first name and last name cannot be empty.")
         for i in self.first_name:
             if i in special_characters:
                 raise ValueError(f"not valid : {self.first_name}")
-        for i in self.surname:
+        for i in self.last_name:
             if i in special_characters:
-                raise ValueError(f"not valid : {self.surname}")
+                raise ValueError(f"not valid : {self.last_name}")
 
-    def _check_date_of_birth(self):
+    def validate_player_date_of_birth(self):
         try:
             datetime.strptime(self.date_of_birth,'%Y-%m-%d')
         except:
             raise ValueError("Invalid format. Use YYYY-MM-DD")
+    
+    def validate_player_id(self):
+        if len(self.p_id) != 7:
+            raise ValueError("Player ID must be 7 characters long")
+        if not self.p_id[:2].isalpha() or not self.p_id[2:].isdigit():
+            raise ValueError("Player ID must start with two letters followed by five digits")
+        return True
     
 
 # from faker import Faker
