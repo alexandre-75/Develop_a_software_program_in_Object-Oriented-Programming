@@ -1,4 +1,4 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query, where
 # from models.match import Match
 
 class Round:
@@ -6,7 +6,7 @@ class Round:
     rounds_database = TinyDB("database/rounds.json", indent=4)
 
     def __init__(self, round_id, round_name, start_date, end_date):
-        self.round_id = round_id
+        self.round_id = str(round_id)
         self.round_name = round_name
         self.start_date = str(start_date)
         self.end_date = str(end_date)
@@ -49,9 +49,25 @@ class Round:
         rounds_database = TinyDB('database/rounds.json')
         return rounds_database.all()
 
-
-
     # def add_match(self, match):
     #     self.match_list.append(match)
 
     
+
+from faker import Faker
+fake = Faker(locale="fr_FR")
+test_r_id= [0, 1, 2, 3, 4]
+for _ in range(10):
+    round = Round(
+        round_id= fake.random_element(elements=test_r_id),
+        round_name = fake.first_name(),
+        start_date= fake.date_of_birth(),
+        end_date = fake.date_of_birth())
+   
+    # print(round.__str__())
+    # print(round.__repr__())
+    # print(round.save_round_in_database())
+    # print(round.find_round_in_database("1"))
+    # print(round.load_all_rounds_from_database())
+    # print(round.update_round_in_database("round_name", "alex", 4))
+    print("_"*10)

@@ -1,4 +1,4 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query, where
 
 class Tournament():
 
@@ -24,7 +24,7 @@ class Tournament():
         return {
             "tournament_id":self.tournament_id,
             "tournament_name":self.tournament_name,
-            "torunament_site":self.tournament_site,
+            "tournament_site":self.tournament_site,
             "start_date":self.start_date,
             "end_date":self.end_date,
             "number_of_rounds":self.number_of_rounds,
@@ -46,7 +46,7 @@ class Tournament():
     @staticmethod
     def update_tournament_in_database(key, value, tournament_id):
         tournaments_database = TinyDB('database/tournaments.json')
-        tournament = self.find_match_in_database(tournament_id)
+        tournament = Tournament.find_tournament_in_database(tournament_id)
         if tournament:
             return tournaments_database.update({key:value}, where("tournament_id") == tournament_id)    
         return "Error in parameters"
@@ -59,20 +59,23 @@ class Tournament():
 
 
 
-# from faker import Faker
-# fake = Faker(locale="fr_FR")
-# scores = [1, 2, 3, 4]
-# for _ in range(10):
-#     tournament = Tournament(
-#         tournament_name = fake.first_name(),
-#         tournament_site = fake.address(), 
-#         start_date = fake.date_this_century(),
-#         end_date = fake.date_this_century(),
-#         current_round = fake.random_element(elements=scores))
-    # print(tournament.save_tournament_in_db())
-    # print(repr(tournament))
-    # print(tournament)
+from faker import Faker
+fake = Faker(locale="fr_FR")
+scores = [1, 2, 3, 4]
+idt = [20, 30, 40]
+for _ in range(10):
+    tournament = Tournament(
+        tournament_id= fake.random_element(elements=idt),
+        tournament_name = fake.first_name(),
+        tournament_site = fake.address(), 
+        start_date = fake.date_this_century(),
+        end_date = fake.date_this_century(),
+        current_round = fake.random_element(elements=scores))
+
     # print(tournament.__str__())
     # print(tournament.__repr__())
-    # print(tournament.format_tournament_data())
+    # print(tournament.save_tournament_in_database())
+    # print(tournament.find_tournament_in_database(20))
+    # print(tournament.load_all_tournaments_from_database())
+    # print(tournament.update_tournament_in_database("tournament_name", "pepep", 20))
     # print("-"*10)

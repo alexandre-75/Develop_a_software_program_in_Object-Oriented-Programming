@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query, where
+from datetime import datetime
 import string
 
 class Player():
@@ -26,14 +27,14 @@ class Player():
 
     def save_player_in_database(self, validate_data = False):
         if validate_data:
-            self.checks()
+            self.validate_player_data()
         return self.players_database.insert(self.format_player_in_database())
 
     @staticmethod   # can be called without creating an instance of the class
     def find_player_in_database(player_id):
         players_database = TinyDB('database/players.json')
         result = players_database.search(where("player_id") == player_id)   # Search in the database, the player corresponding to the id provided as input.
-        if result== True:
+        if result:
             return result[0]
         return "No player found in database"
 
@@ -41,7 +42,7 @@ class Player():
     def update_player_in_database(key, value, player_id):
         players_database = TinyDB('database/players.json')
         player = Player.find_player_in_database(player_id)
-        if player == True:
+        if player:
             return players_database.update({key:value}, where("player_id") == player_id)    
         return "error in parameters"
 
@@ -53,7 +54,7 @@ class Player():
     def validate_player_data(self):
         self.validate_player_first_name_and_last_name()
         self.validate_player_date_of_birth()
-        self.validate_player_id()
+        # self.validate_player_id()
 
     def validate_player_first_name_and_last_name(self):
         special_characters = string.punctuation + string.digits
@@ -72,31 +73,31 @@ class Player():
         except:
             raise ValueError("Invalid format. Use YYYY-MM-DD")
     
-    def validate_player_id(self):
-        if len(self.p_id) != 7:
-            raise ValueError("Player ID must be 7 characters long")
-        if not self.p_id[:2].isalpha() or not self.p_id[2:].isdigit():
-            raise ValueError("Player ID must start with two letters followed by five digits")
-        return True
+    # def validate_player_id(self):
+    #     if len(self.player_id) != 7:
+    #         raise ValueError("Player ID must be 7 characters long")
+    #     if not self.player_id[:2].isalpha() or not self.player_id[2:].isdigit():
+    #         raise ValueError("Player ID must start with two letters followed by five digits")
+    #     return True
     
 
-# from faker import Faker
-# fake = Faker(locale="fr_FR")
-# scores = [1, 2, 3, 4]
-# for _ in range(10):
-#     player = Player(first_name = fake.first_name(), 
-#                     surname = fake.last_name(), 
-#                     date_of_birth = fake.date_of_birth(), 
-#                     p_id = fake.random_element(elements=scores))
-    # player._check_first_name_and_surname()
-    # player._check_date_of_birth()
-    # print(repr(player))
+from faker import Faker
+fake = Faker(locale="fr_FR")
+scores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+for _ in range(10):
+    player = Player(first_name = fake.first_name(), 
+                    last_name = fake.last_name(), 
+                    date_of_birth = fake.date_of_birth(), 
+                    player_id = fake.random_element(elements=scores))
+
     # print("-" * 10)
-    # print(string.punctuation)
-    # print(player.save_player_in_db(validate_data = True))
-# print(Player.update_player_data("surname", "ale", "1"))
-    # print(player.load_all_player_in_db())
-    # print(player.search_player_in_db("2"))
+    # print(player.__str__())
+    # print(player.__repr__())
+    # print(player.save_player_in_database(validate_data=True))
+    # print(player.find_player_in_database("9"))
+    # print(player.update_player_in_database("last_name","bonjour", "9"))
+    # print(player.load_all_players_from_database())
+
 
 
 
