@@ -19,12 +19,11 @@ class MainMenu():
                 4. return""")
         return input_a_number()
 
+    def display_player_menu():
+        print("""Player menu:
+                1. Add a new player to the database
+                2. Find a player from the database
+                3. Update a player from the database
+                4. Return""")
 
-def display_player_menu():
-    print("""Player menu:
-            1. Add a new player to the database
-            2. Find a player from the database
-            3. Update a player from the database
-            4. Return""")
-
-    return input_a_number()
+        return input_a_number()
