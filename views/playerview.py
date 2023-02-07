@@ -1,25 +1,26 @@
-
+from models.player import Player
 
 class PlayerView():
 
-    def input_first_name_player(self):
-       return input("Prénom du joueur: ")
-        
-    def input_last_name_player(self):
-        return input("Nom de famille du joueur: ")
+    def __init__(self,first_name=False, last_name=False, date_of_birth=False, player_id=False):
+ 
+        super().__init__(first_name, last_name, date_of_birth, player_id)
 
-    def input_birthday_day(self):
-        return input("Jour de naissance: ")
+    def input_first_name(self):
+        self.first_name = str(input("Quelle est le prénom du joueur ? : "))
 
-    def input_birthday_month(self):
-        return input("Mois de naissance: ")
-
-    def input_birthday_year(self):
-        return input("Année de naissance: ")
+    def input_last_name(self):
+        self.last_name = str(input("Quelle est le nom du joueur ? : "))
 
     def input_date_of_birth(self):
-        return input("Année de naissance du joueur: ")
-    
+        self.date_of_birth = str(input("Date de naissance (format YYYY-MM-DD) :"))
+
     def input_player_id(self):
-        return input("identifiant du joueur: ")
-        
+        self.player_id = str(input("id: "))
+
+    def display_player(self):
+        print(f"Récapitulatif:\n Id: {self.player_id}\n Nom: {self.last_name}\n Prénom: {self.first_name}\n Date de naissance: {self.date_of_birth}")
+
+    def display_added_player_message(self):
+        print(f"{self.last_name} {self.first_name} est ajouté.")
+    
