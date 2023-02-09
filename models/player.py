@@ -1,33 +1,36 @@
 from tinydb import TinyDB, Query, where
 from datetime import datetime
-import string
+
 
 class Player():
     
     players_database = TinyDB("database/players.json", indent=4)
 
-    def __init__(self, first_name, last_name, date_of_birth, player_id): 
-        self.first_name = first_name
-        self.last_name = last_name
+    def __init__(self, first_name, last_name, date_of_birth, player_id, score_player=0, ranking=1): 
+        self.first_name = str(first_name)
+        self.last_name = str(last_name)
         self.date_of_birth = str(date_of_birth)
         self.player_id = str(player_id)
+        self.score_player = int(score_player)
+        self.ranking = int(ranking)
 
     def __str__(self):
-            return f"(First name: {self.first_name}\n Last name: {self.last_name}\n ID: {self.player_id})"
+            return f"(First name:{self.first_name}\n Last name:{self.last_name})"
 
     def __repr__(self):
-        return f"Player({self.first_name}, {self.last_name}, {self.player_id})"
+        return f"Player({self.first_name},{self.last_name})"
+    
+    # -----------------------------------------------------------------------------------------------
     
     def format_player_in_database(self):
         return {"player_id":self.player_id,
                 "first_name":self.first_name,
                 "last_name":self.last_name, 
-                "birth_date":self.date_of_birth
-        }
+                "birth_date":self.date_of_birth,
+                "score_player":self.score_player,
+                "ranking":self.ranking}
 
-    def save_player_in_database(self, validate_data = False):
-        if validate_data:
-            self.validate_player_data()
+    def save_player_in_database(self,):
         return self.players_database.insert(self.format_player_in_database())
 
     @staticmethod   # can be called without creating an instance of the class
@@ -51,35 +54,7 @@ class Player():
         players_database = TinyDB('database/players.json')
         return players_database.all()
     
-    def validate_player_data(self):
-        self.validate_player_first_name_and_last_name()
-        self.validate_player_date_of_birth()
-        # self.validate_player_id()
 
-    def validate_player_first_name_and_last_name(self):
-        special_characters = string.punctuation + string.digits
-        if not (self.first_name and self.last_name):
-            raise ValueError("first name and last name cannot be empty.")
-        for i in self.first_name:
-            if i in special_characters:
-                raise ValueError(f"not valid : {self.first_name}")
-        for i in self.last_name:
-            if i in special_characters:
-                raise ValueError(f"not valid : {self.last_name}")
-
-    def validate_player_date_of_birth(self):
-        try:
-            datetime.strptime(self.date_of_birth,'%Y-%m-%d')
-        except:
-            raise ValueError("Invalid format. Use YYYY-MM-DD")
-    
-    # def validate_player_id(self):
-    #     if len(self.player_id) != 7:
-    #         raise ValueError("Player ID must be 7 characters long")
-    #     if not self.player_id[:2].isalpha() or not self.player_id[2:].isdigit():
-    #         raise ValueError("Player ID must start with two letters followed by five digits")
-    #     return True
-    
 
 from faker import Faker
 fake = Faker(locale="fr_FR")
