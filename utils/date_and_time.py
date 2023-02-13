@@ -12,7 +12,7 @@ from datetime import datetime
 # current_time = obj_DateAndTime.get_date_time()
 # print(current_time)
 
-def get_timestamp():
+def get_times():
     return datetime.now()
 
 # print(get_timestamp())

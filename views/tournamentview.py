@@ -7,7 +7,6 @@ class TournamentView(Tournament):
 
         super().__init__(tournament_id, tournament_name, tournament_site, start_date, end_date, number_of_rounds=4, current_round=1, general_remarks="")
 
-
     def input_tournament_id(self):
         self.player_id = str(input("id: "))
 

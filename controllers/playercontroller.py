@@ -6,7 +6,7 @@ class PlayerController:
 
     def __init__(self):
         self.view = PlayerView()
-         self.players = {}
+        self.players = {}
         
     def new_player(self):
         new_player = Player(self.view.input_first_name(),
