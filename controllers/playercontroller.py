@@ -27,3 +27,9 @@ class PlayerController:
 
     def __getitem__(self, key):
         return self.players[key]
+
+    def __setitem__(self, key, value):
+        if key in self.players:
+            self.players[key] = value
+        else:
+            self.players[key] = value
