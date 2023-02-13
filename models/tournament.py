@@ -13,12 +13,37 @@ class Tournament():
         self.number_of_rounds = number_of_rounds
         self.current_round = current_round
         self.general_remarks = general_remarks
+        self.rounds =[]
+        self.players=[]
 
+#---------------------------------------------------------------------------------------------
     def __str__(self):
             return f"(Tournament name: {self.tournament_name}\n ID: {self.tournament_id})"
 
     def __repr__(self):
         return f"Tournament({self.tournament_name}, {self.tournament_id})"
+# -------------------------------------------------------------------------------------------
+    def add_player_objet_in_players_list(self, player):
+        "Add player object in tournament players list attribut."
+        self.players.append(player)
+        
+    def get_players_list(self):
+        return self.players
+#---------------------------------------------------------------------------------------------
+    def add_round_objet_in_rounds_list(self, round):
+        "Add round object in tournament rounds list attribut."
+        self.rounds.append(round)
+
+    def add_match(self, player1, player2, score1, score2):
+        if self.rounds:
+            last_round = self.rounds[-1]
+            last_round.add_match(player1, player2, score1, score2)
+
+
+
+    # def add_new_round(self):
+    #     if len(self.rounds) < self.number_of_rounds:
+    #         self.rounds.append(Round(len(self.rounds) + 1))
 
     def format_tournament_in_database(self):
         return {

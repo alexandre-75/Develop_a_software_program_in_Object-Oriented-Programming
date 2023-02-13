@@ -1,30 +1,31 @@
 from tinydb import TinyDB, Query, where
 
+
 class Match():
 
     matches_database = TinyDB("database/matches.json", indent=4)
   
     def __init__(self, match_id, player_1, score_p1, player_2, score_p2):
         self.match_id = str(match_id)
-        self.player_1 = player_1
-        self.score_p1 = score_p1
-        self.player_2 = player_2
-        self.score_p2 = score_p2  
-        self.result = ([player_1, score_p1], [player_2, score_p2])   # single match stored as a tuple containing two lists
+        self.match = ([player_1, score_p1], [player_2, score_p2])   # single match stored as a tuple containing two lists
+
+ #-------------------------------------------------------------------------------------------------
 
     def __str__(self):
-        return f"Match ID:{self.match_id}\n {self.player_1} vs {self.player_2}"
+        return f"{self.match[0][1]} vs {self.match[1][0]}"
 
     def __repr__(self):
-        return f"Match({self.player_1}, {self.player_2})"
+        return f"Match({self.match[0][1]}, {self.match[1][0]})"
+
+ #------------------------------------------------------------------------------------------------
 
     def format_match_in_data(self):
-        return {"match_id": self.match_id,
-                "result": self.result
-        }
+        return {"result": self.match}
 
     def save_match_in_database(self):
             return self.matches_database.insert(self.format_match_in_data())
+
+ #---------------------------------------------------------------------------------------------------
  
     @staticmethod   # can be called without creating an instance of the class
     def find_match_in_database(match_id):
@@ -41,6 +42,10 @@ class Match():
         if match:
             return matches_database.update({key:value}, where("match_id") == match_id)    
         return "Error in parameters"
+
+    # def update_score(self, new_score1, new_score2):
+    #     self.pairs[0][1] = new_score1
+    #     self.pairs[1][1] = new_score2 
 
     @staticmethod
     def load_all_matches_from_db():
@@ -65,7 +70,7 @@ for _ in range(10):
     # print(match.save_match_in_database())
     # print(match.find_match_in_database("1"))
     # print(match.load_all_matches_from_db())
-    print(match.update_match_in_database("score_p1", 80, "0"))
+    # print(match.update_match_in_database("score_p1", 80, "0"))
     print("_"*10)
 
 
