@@ -20,8 +20,6 @@ class Player():
     def __repr__(self):
         return f"Player({self.first_name},{self.last_name})"
     
-    # -----------------------------------------------------------------------------------------------
-    
     def format_player_in_database(self):
         return {"player_id":self.player_id,
                 "first_name":self.first_name,
@@ -52,8 +50,11 @@ class Player():
     @staticmethod
     def load_all_players_from_database():
         players_database = TinyDB('database/players.json')
-        return players_database.all()
-    
+        players_database.all()
+        players =[]
+        for i in players_database:
+            players.append(i)
+        return players
 
 
 from faker import Faker
@@ -68,10 +69,12 @@ for _ in range(10):
     # print("-" * 10)
     # print(player.__str__())
     # print(player.__repr__())
-    # print(player.save_player_in_database(validate_data=True))
+    # print(player.save_player_in_database())
     # print(player.find_player_in_database("9"))
     # print(player.update_player_in_database("last_name","bonjour", "9"))
     # print(player.load_all_players_from_database())
+
+
 
 
 

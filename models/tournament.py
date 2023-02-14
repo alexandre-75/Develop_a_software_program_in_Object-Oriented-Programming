@@ -4,7 +4,7 @@ class Tournament():
 
     tournaments_database = TinyDB('database/tournaments.json', indent=4)
 
-    def __init__(self,tournament_id, tournament_name, tournament_site, start_date, end_date, number_of_rounds=4, current_round=1, general_remarks=""):       
+    def __init__(self,tournament_id, tournament_name, tournament_site, start_date, end_date, number_of_rounds=4, current_round=1, general_remarks="", players=[], rounds=[]):       
         self.tournament_id = tournament_id
         self.tournament_name = tournament_name
         self.tournament_site = tournament_site
