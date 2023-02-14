@@ -14,12 +14,33 @@ class MainMenu():
 
     @staticmethod   
     def display_main_menu():
-        display = print("""Menu
-                Tournament menu:
+        return print("""Menu
+                
                 1. Start a Tournament
                 2. Add a new player to the database
                 3. exit""")
-        return display
+    
+    @staticmethod
+    def display_new_player():
+        print("new player")
+    
+    @staticmethod
+    def input_prompt_text(option):
+        print(f"Enter {option} : ")
+    
+    @staticmethod
+    def review_player(info): 
+        print("New player created :")
+        print(f"{info[0]}, {info[1]}")
+        print(f"Date of birth : {info[2]}")
+        print(f"player_id : {info[3]}")
+        print(f"score_player:{info[4]}")
+        print(f"Rank : {info[5]}")
+        print("Save to database ? [yes/no] ")
+
+    @staticmethod
+    def player_saved():
+        print("saved to database ok")
 
     # def display_tournament_menu():
     #     print("""Tournament menu:
@@ -39,4 +60,4 @@ class MainMenu():
     #     return input_a_number()
 
 
-# print(MainMenu.display_main_menu())
+print(MainMenu.display_main_menu())
