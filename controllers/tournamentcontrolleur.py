@@ -65,3 +65,18 @@ class TournamentController():
             else:
                 self.tournament_view.player_already_selected()
         return tour_players
+    
+    def load_an_old_tournament (self):
+        tournament_list = Tournament.load_all_tournaments_from_database()
+        self.tournament_view.select_tournament(tournament_list)
+        self.menu_view.input_prompt()
+        user_input = input()
+        if user_input == "back":
+            self.main_menu_start()
+        for tournament in tournament_list:
+            if user_input == str(tournament["id"]):
+                t = Tournament(**tournament)
+                # self.start_tournament(t)
+    
+    def start_tournament(self):
+        pass

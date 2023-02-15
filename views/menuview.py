@@ -9,7 +9,8 @@ class MainMenu():
                 1. Start a Tournament
                 2. Add a new player to the database
                 3. update a player from the database
-                4. EXIT""")
+                4. load an old tournament
+                5. EXIT""")
 
     @staticmethod
     def exit_the_program():

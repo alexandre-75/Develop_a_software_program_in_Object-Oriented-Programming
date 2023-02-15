@@ -28,7 +28,15 @@ class TournamentView():
     @staticmethod
     def tournament_saved():
         print("saved to database ok")
-        
+
     @staticmethod
     def start_tournament_prompt():
         print("\nStart tournament now ? [yes/no] ")
+    
+    @staticmethod
+    def select_tournament(tournaments):
+        for tournament in tournaments:
+            print(f"{tournament['tournament_id']}, {tournament['tournament_name']}, {tournament['tournament_site']}, {tournament['general_remarks']} "
+                f"Started on : {tournament['start_date']} | Ended on : {tournament['end_date']} | "
+                f"Round {tournament['current_round']},{tournament['number_of_rounds']}, players:[{tournament[player]}]")
+            print("[back] Back to main menu")

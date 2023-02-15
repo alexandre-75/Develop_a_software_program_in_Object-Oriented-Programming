@@ -21,9 +21,13 @@ class controllers():
         elif user_input == "3":
             self.player_controller.update_player()
         elif user_input == "4":
+            self.tournament_controller.load_an_old_tournament()
+        else: 
+            user_input == "5"
             self.menu_view.exit_the_program()
             user_input = str(input()).lower()
             if user_input == "yes":
                 exit()
-            elif user_input == "no":
+            else:
+                user_input == "no"
                 self.main_menu_start()
