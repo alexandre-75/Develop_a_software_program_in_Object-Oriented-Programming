@@ -8,14 +8,14 @@ class PlayerControlleur():
         self.player_view = PlayerView()
 
     def new_player(self):
-        self.menu_view.display_new_player()
+        self.player_view.display_new_player()
         player_info =[]
         options = ["first_name","last_name","date of birth","player_id","score_player","rank"]
         for i in options:
-            self.menu_view.input_prompt_text(i)
+            self.menu_view.input_prompt_text_2(i)
             user_input = input()
             player_info.append(user_input)
-        MainMenu.review_player(player_info)
+        self.player_view.review_player(player_info)
         user_input = input().lower()
         if user_input == "yes":
             player = Player(
@@ -27,7 +27,7 @@ class PlayerControlleur():
                 ranking=player_info[5]
             )
             player.save_player_in_database()
-            self.menu_view.player_saved()
+            self.player_view.player_saved()
             self.main_menu_start()
         elif user_input == "no":
             self.main_menu_start()
@@ -46,5 +46,5 @@ def update_player(self):
                 new_value = self.menu_view.input_prompt_text(f"nouveau {options[option_index]}")
                 selected_player[selected_option] = new_value
                 selected_player.update_player_in_database(selected_option, new_value, selected_player.player_id)
-                self.menu_view.player_saved()
+                self.player_view.player_saved()
                 break

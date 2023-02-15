@@ -1,23 +1,27 @@
-
 from views.menuview import MainMenu
+from views.tournamentview import TournamentView
+from views.playerview import PlayerView
 from models.tournament import Tournament
+from models.player import Player
 
 class TournamentController():
 
     def __init__(self):
         self.menu_view = MainMenu()
+        self.tournament_view = TournamentView()
+        self.player_view = PlayerView()
 
     def new_tournament(self):
-        self.menu_view.display_new_tournament()
+        self.tournament_view.display_new_tournament()
         tournament_info =[]
         options ["tournament_id","tournament_name","tournament_site","number_of_rounds","general_remarks"]
         for i in options:
-            self.menu_view.input_prompt_text(i)
+            self.menu_view.input_prompt_text_2(i)
             user_input = input()
             tournament_info.append(user_input)
         
         tours_players = self.select_players(8)
-        self.menu_view.review_tournament(tournament_info, tours_players)
+        self.tournament_view.review_tournament(tournament_info, tours_players)
         user_input = input().lower()
         if user_input == "yes":
             tournament = Tournament(
@@ -33,8 +37,8 @@ class TournamentController():
                 rounds=[]    
             )
             tournament.save_tournament_in_database()
-            self.menu_view.tournament_saved()
-            self.menu_view.start_tournament_prompt()
+            self.tournament_view.tournament_saved()
+            self.tournament_view.start_tournament_prompt()
             user_input = input()
             if user_input == "yes":
                 pass
@@ -50,7 +54,7 @@ class TournamentController():
         tour_players = []
         i = 0
         while i < players_total:
-            self.menu_view.select_players(players, i+1)
+            self.player_view.select_players(players)
             self.menu_view.input_prompt()
             user_input = input()
             if int(user_input) in id_list:
@@ -59,5 +63,5 @@ class TournamentController():
                 id_list.pop(index)
                 i += 1
             else:
-                self.menu_view.player_already_selected()
+                self.tournament_view.player_already_selected()
         return tour_players
