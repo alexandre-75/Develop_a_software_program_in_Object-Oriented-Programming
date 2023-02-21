@@ -2,35 +2,20 @@ class PlayerView():
 
     def __init__(self):
         pass
-
-    @staticmethod
-    def display_new_player():
-        print("creation a new player")
+      
+    def summary_of_new_player_created(self, info):
+        print("---------- summary of new player created ----------")
+        print(f"first name : {info['first_name']}")
+        print(f"Last name : {info['last_name']}")
+        print(f"Date of birth : {info['date_of_birth']}")
+        print(f"Player ID : {info['player_id']}")
+        print(f"Score of player: {info['score_of_player']}")
+        print(f"Rank : {info['ranking']}")
     
-    @staticmethod
-    def review_player(info): 
-        print("New player created :")
-        print(f"{info[0]}, {info[1]}")
-        print(f"Date of birth : {info[2]}")
-        print(f"player_id : {info[3]}")
-        print(f"score_player:{info[4]}")
-        print(f"Rank : {info[5]}")
-        print("Save to database ? [yes/no] ")
+    def player_message_is_saved_in_the_database(self):
+        print("player information is correctly saved in the tournament database")
     
-    @staticmethod
-    def player_saved():
-        print("saved to database ok")
-    
-    @staticmethod
-    def select_players(players):
-        for i in range(len(players)):
-            print(f"[{players[i]['player_id']}]")
-            print(f"{players[i]['last_name']}, {players[i]['first_name']}")
-            print(f"{players[i]['ranking']}, {players[i]['date_of_birth']}")
-            print(f"{players[i]['score_player']}")
-    
-    @staticmethod
-    def update_player_info(selected_player, options):
-        print(f"Updating {selected_player.last_name}, {selected_player.first_name}")
-        for i in range(len(options)):
-            print(f"[{i+1}] Update {options[i]}")
+    def display_available_players(self, players):
+        print("id, Last Name, First Name")
+        for player in players:
+            print(f"{player['player_id']:5} ; {player['last_name']} ; {player['first_name']}")
