@@ -19,7 +19,7 @@ class MenuController():
         self.player_view = PlayerView()
         # self.round_view = RoundView()
 
-        self.tournament_controller = TournamentController()
+        # self.tournament_controller = TournamentController()
         
     def main_menu_start(self):
         self.menu_view.print_main_menu_options()
@@ -32,16 +32,10 @@ class MenuController():
         elif user_input == 3:
             self.update_player()
         elif user_input == 4:
-            self.tournament_controller.load_an_old_tournament()
+            self.load_an_old_tournament()
         else: 
             user_input == 5
-            self.menu_view.quit_the_program_now()
-            user_input = str(input()).lower()
-            if user_input == "yes":
-                exit()
-            else:
-                user_input == "no"
-                main_menu_start()
+            self.exit_the_program()
          
     def creation_of_a_new_player(self):
         player_information= {}
@@ -111,7 +105,7 @@ class MenuController():
         else:
             self.new_tournament()
     
-    def update_player(self):
+    def update_player(self): 
         players = Player.load_all_players_from_database()
         self.player_view.display_available_players(players)
         player_index = int(input("Enter a number to select the player: ")) - 1
@@ -135,3 +129,29 @@ class MenuController():
         else:
             self.player_view.player_message_not_saved_in_the_database()
             self.update_player()
+        
+    def exit_the_program(self):
+
+        self.menu_view.quit_the_program_now()
+        user_input = str(input()).lower()
+        if user_input == "yes":
+            exit()
+        else:
+            user_input == "no"
+            main_menu_start()
+    
+    def load_an_old_tournament (self): 
+        tournament_list = Tournament.load_all_tournaments_from_database()
+        self.tournament_view.select_tournament(tournament_list)
+        user_input = input("enter a tournament ID : ")
+        for tournament in tournament_list:
+            if user_input == str(tournament["tournament_id"]):
+                t = Tournament(**tournament)
+                return print(t)
+                # self.start_tournament(t)
+            else:
+                self.tournament_view.print_error_load_tournament()
+                self.load_an_old_tournament()
+                
+            
+   

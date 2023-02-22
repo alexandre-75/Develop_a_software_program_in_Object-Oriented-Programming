@@ -23,3 +23,25 @@ class TournamentView():
 
     def invalid_player_id(self):
         print("the identifier is not recognized, try again")
+
+    def select_tournament(self, tournaments_list):
+        
+        if len(tournaments_list) == 0:
+            print("No tournaments found.")
+        else:
+            print("{:<5} {:<20} {:<20} {:<30} {:<15} {:<15} {:<10}".format(
+                "ID", "Name", "Location", "Description", "Start Date", "End Date", "Current Round"
+            ))
+            for tournament in tournaments_list:
+                print("{:<5} {:<20} {:<20} {:<30} {:<15} {:<15} {:<10}".format(
+                    tournament['tournament_id'],
+                    tournament['tournament_name'],
+                    tournament['tournament_site'],
+                    tournament['start_date'],
+                    tournament['end_date'],
+                    tournament['general_remarks'],
+                    f"Round {tournament['current_round']}/{tournament['number_of_rounds']}"
+                ))
+    
+    def print_error_load_tournament(self):
+        print("an error while loading, enter a valid id")
