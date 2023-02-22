@@ -1,13 +1,13 @@
 from views.menuview import MainMenu
 from views.playerview import PlayerView
 from views.tournamentview import TournamentView
-from views.roundview import RoundView
+# from views.roundview import RoundView
 
 from controllers.tournamentcontrolleur import TournamentController
 
 from models.tournament import Tournament
 from models.player import Player
-from models.round import Round
+# from models.round import Round
 
 
 class MenuController():
@@ -17,11 +17,10 @@ class MenuController():
         self.menu_view = MainMenu()
         self.tournament_view = TournamentView()
         self.player_view = PlayerView()
-        self.round_view = RoundView()
+        # self.round_view = RoundView()
 
         self.tournament_controller = TournamentController()
         
-
     def main_menu_start(self):
         self.menu_view.print_main_menu_options()
         user_input = self.menu_view.enter_a_number_to_select_a_main_menu_option()
@@ -44,7 +43,6 @@ class MenuController():
                 user_input == "no"
                 main_menu_start()
          
-
     def creation_of_a_new_player(self):
         player_information= {}
         options = {
@@ -112,3 +110,28 @@ class MenuController():
                 self.main_menu_start()
         else:
             self.new_tournament()
+    
+    def update_player(self):
+        players = Player.load_all_players_from_database()
+        self.player_view.display_available_players(players)
+        player_index = int(input("Enter a number to select the player: ")) - 1
+        p = players[player_index]
+        p = Player(
+            p['last_name'],
+            p['first_name'],
+            p['date_of_birth'],
+            p['player_id'],
+            p['score_of_player'],
+            p['ranking']
+        )
+        options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
+        self.player_view.display_player_update_options(p, options)
+        option_index = int(input("Enter a number to select the option: ")) - 1
+        if option_index <= len(options):
+            option = options[option_index]
+            new_value = input(f"Enter new {option}: ")
+            p.update_player_in_database(option, new_value)
+            self.player_view.player_message_is_saved_in_the_database()
+        else:
+            self.player_view.player_message_not_saved_in_the_database()
+            self.update_player()

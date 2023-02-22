@@ -13,9 +13,17 @@ class PlayerView():
         print(f"Rank : {info['ranking']}")
     
     def player_message_is_saved_in_the_database(self):
-        print("player information is correctly saved in the tournament database")
-    
+        print("player information is correctly saved in the database")
+
+    def player_message_not_saved_in_the_database(self):
+        print("player information is not saved in the database")
+
     def display_available_players(self, players):
         print("id, Last Name, First Name")
-        for player in players:
-            print(f"{player['player_id']:5} ; {player['last_name']} ; {player['first_name']}")
+        for i, player in enumerate(players):
+            print(f"{i+1} - {player['last_name']} {player['first_name']} (id: {player['player_id']})")
+   
+    def display_player_update_options(self, selected_player, options):
+        # print(f"Updating {selected_player.last_name}, {selected_player.first_name}")
+        for i, option in enumerate(options):
+            print(f"[{i+1}] Update {option}")
