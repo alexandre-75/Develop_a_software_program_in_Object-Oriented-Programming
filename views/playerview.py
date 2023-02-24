@@ -24,6 +24,5 @@ class PlayerView():
             print(f"{i+1} - {player['last_name']} {player['first_name']} (id: {player['player_id']})")
    
     def display_player_update_options(self, selected_player, options):
-        # print(f"Updating {selected_player.last_name}, {selected_player.first_name}")
         for i, option in enumerate(options):
             print(f"[{i+1}] Update {option}")

@@ -36,3 +36,23 @@ class Tournament():
     def load_all_tournaments_from_database(self):
         tournaments_database = TinyDB('database/tournaments.json')
         return tournaments_database.all()
+    
+    def update_timer(self, value, key, tournament_id):
+        database = self.tournaments_database
+        database.update({key:value}, where("tournament_id") == tournament_id)
+    
+    def sort_players_by_rank(self):
+        print(self.players)
+        return self.players.sort(key=lambda player: player['rank'])
+        
+    def split_players(self, a):
+        half = len(a) // 2
+        top_half = a[:half]
+        bottom_half = a[half:]
+        return top_half, bottom_half
+
+    def update_tournament_db(self):
+            db = self.tournaments_database
+            db.update({'rounds': self.rounds}, doc_ids=[self.tournament_id])
+            db.update({'players': self.players}, doc_ids=[self.tournament_id])
+            db.update({'current_round': self.current_round}, doc_ids=[self.tournament_id])

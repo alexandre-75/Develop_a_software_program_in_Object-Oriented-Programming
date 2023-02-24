@@ -19,7 +19,7 @@ class MenuController():
         self.player_view = PlayerView()
         # self.round_view = RoundView()
 
-        # self.tournament_controller = TournamentController()
+        self.tournament_controller = TournamentController()
         
     def main_menu_start(self):
         self.menu_view.print_main_menu_options()
@@ -76,7 +76,7 @@ class MenuController():
             user_input = input(f"{value}: ")
             tournament_info[key] = user_input
         
-        player_present_in_the_tournament = self.tournament_controller.select_player_list(2)
+        player_present_in_the_tournament = self.tournament_controller.select_player_list(4)
         self.tournament_view.summary_of_new_tournament_created(tournament_info, player_present_in_the_tournament)
         
         user_input = input("Do you confirm tournament information? (YES or NO)").lower()
@@ -93,12 +93,12 @@ class MenuController():
                 players= player_present_in_the_tournament,
                 rounds=[]    
             )
-            tournament.save_tournament_in_database()
+            print(tournament.save_tournament_in_database())
             self.tournament_view.tournament_message_is_saved_in_the_database()
             self.tournament_view.message_start_tournament()
             user_input = input().lower()
             if user_input == "yes":
-                # self.tournament_controller.start_tournament(tournament)
+                self.tournament_controller.start_tournament(tournament)
                 pass
             elif user_input == "no":
                 self.main_menu_start()
@@ -152,6 +152,3 @@ class MenuController():
             else:
                 self.tournament_view.print_error_load_tournament()
                 self.load_an_old_tournament()
-                
-            
-   
