@@ -28,10 +28,10 @@ class RoundView():
 
         print(self.table)
     
-    @staticmethod
-    def score_options(match_number):
+    def score_options(self, match_number):
         print("Match : ", int(match_number) + 1)
-        print('[0] Draw')
-        print('[1] Player 1 wins')
-        print('[2] Player 2 wins')
+        print('[1] Draw')
+        print('[2] Player 1 wins')
+        print('[3] Player 2 wins')
+    
         

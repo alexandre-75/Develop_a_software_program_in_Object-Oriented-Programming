@@ -50,9 +50,10 @@ class Tournament():
         top_half = a[:half]
         bottom_half = a[half:]
         return top_half, bottom_half
+   
+    def update_tournament_from_database(self):
+        db = self.tournaments_database  
+        db.update({'rounds': self.rounds}, where('tournament_id') == self.tournament_id)
+        db.update({'players': self.players}, where('tournament_id') == self.tournament_id)
+        db.update({'current_round': self.current_round}, where('tournament_id') == self.tournament_id)
 
-    def update_tournament_db(self):
-            db = self.tournaments_database
-            db.update({'rounds': self.rounds}, doc_ids=[self.tournament_id])
-            db.update({'players': self.players}, doc_ids=[self.tournament_id])
-            db.update({'current_round': self.current_round}, doc_ids=[self.tournament_id])
