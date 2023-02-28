@@ -23,13 +23,15 @@ class ReportView ():
             "current_round",
             "general_remarks",
             "participants"
-
         ]
+        self.display_header_tournament_id =["tournament_id"]
+
     
     def report_menu(self):
         options = [
             "get all the players present in the DB in alphabetical order (last name)", 
-            "list of all tournaments"
+            "list of all tournaments",
+            "name and dates of a tournament"
         ]
         menu = "\n".join([f"{i}- {option}" for i, option in enumerate(options, start=1)])
         return print(menu)
@@ -49,7 +51,6 @@ class ReportView ():
         print(self.table)
     
     def display_all_tournaments_report(self, tournaments):
-        """Display tournament reports"""
         self.table.clear()
         self.table.field_names = self.display_report_header_all_tournaments
         self.table.align = "l"
@@ -74,3 +75,22 @@ class ReportView ():
 
         os.system('mode con: cols=200 lines=90')
         print(self.table)
+
+    def display_all_tournament_by_id(self, tournaments):
+        field_id = self.display_header_tournament_id
+        rows = []
+        for tournament in tournaments:
+            rows.append([
+                tournament[field.lower()] for field in field_id
+            ])
+        self.table.clear()
+        self.table.field_id = field_id
+        self.table.align = "c"
+        self.table.add_rows(rows)
+        print("all the players present sorted by ID")
+        print(self.table)
+    
+    def display_name_and_dates_tournament (self, tournmanent_name, start_date, end_date):
+        print(f"tournament_name: {tournmanent_name}")
+        print(f"start_date: {start_date}")
+        print(f"end_date: {end_date}")

@@ -147,7 +147,7 @@ class MenuController():
             main_menu_start()
     
     def load_an_old_tournament (self): 
-        tournament_list = Tournament.load_all_tournaments_from_database()
+        tournament_list = Tournament.load_all_tournaments_from_database(self)
         self.tournament_view.select_tournament(tournament_list)
         user_input = input("enter a tournament ID : ")
         for tournament in tournament_list:
@@ -166,3 +166,5 @@ class MenuController():
             self.report_controller.all_players_sorted_alphabetically(Player.load_all_players_from_database())
         if user_input == 2:
             self.report_controller.all_tournaments(Tournament.load_all_tournaments_from_database(self))
+        if user_input == 3:
+            self.report_controller.name_and_dates_of_a_tournament(Tournament.load_all_tournaments_from_database(self))
