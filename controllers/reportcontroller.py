@@ -8,7 +8,6 @@ class ReportController():
         self.report_view = ReportView()
         self.menu_view = MainMenu()
 
-
     def all_players_sorted_alphabetically(self, players):
         players = sorted(players, key=lambda x: x.get("last_name"))
         self.report_view.display_all_players_by_last_name(players)
@@ -19,8 +18,17 @@ class ReportController():
     def name_and_dates_of_a_tournament(self, tournaments):
         tournaments = sorted(tournaments, key=lambda x: x.get("tournament_id"))
         self.report_view.display_all_tournament_by_id(tournaments)
-        user_input = self.menu_view.enter_a_id_to_select_a_player()
+        user_input = self.menu_view.enter_a_id()
         for t in tournaments:
             if t["tournament_id"] == int(user_input):
                 self.report_view.display_name_and_dates_tournament(t["tournament_name"], t["start_date"], t["end_date"])
                
+    def list_of_tournament_players_in_alphabetical_order(self, tournaments):
+        tournaments = sorted(tournaments, key=lambda x: x.get("tournament_id"))
+        self.report_view.display_all_tournament(tournaments)
+        user_input = self.menu_view.enter_a_id()
+        for t in tournaments:
+            if t["tournament_id"] == int(user_input):
+                a = t["players"]
+                players = sorted(a, key=lambda x: x.get("last_name"))
+                self.report_view.display_all_players_by_last_name(players)

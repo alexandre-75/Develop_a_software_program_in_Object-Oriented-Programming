@@ -34,13 +34,13 @@ class MainMenu():
         user_choice = input("Select the desired option (1-#): ")
         if user_choice.isdigit():
             user_choice = int(user_choice)
-            if user_choice in [1, 2, 3]:
+            if user_choice in [1, 2, 3, 4]:
                 return user_choice
         print("Invalid input. Please enter a number between 1 and #.")
     
     def quit_the_program_now(self):
         print("do you want to quit the program now? (YES or NO) ")
     
-    def enter_a_id_to_select_a_player(self):
+    def enter_a_id(self):
         user_choice = input("select the desired ID : ")
         return user_choice
