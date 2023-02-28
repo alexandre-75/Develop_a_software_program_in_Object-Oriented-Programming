@@ -164,3 +164,5 @@ class MenuController():
         user_input = self.menu_view.enter_a_number_to_select_a_report_option()
         if user_input == 1:
             self.report_controller.all_players_sorted_alphabetically(Player.load_all_players_from_database())
+        if user_input == 2:
+            self.report_controller.all_tournaments(Tournament.load_all_tournaments_from_database(self))

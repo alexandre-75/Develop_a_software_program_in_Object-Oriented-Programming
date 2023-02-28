@@ -34,7 +34,7 @@ class MainMenu():
         user_choice = input("Select the desired option (1-#): ")
         if user_choice.isdigit():
             user_choice = int(user_choice)
-            if user_choice in [1]:
+            if user_choice in [1, 2]:
                 return user_choice
         print("Invalid input. Please enter a number between 1 and #.")
     
