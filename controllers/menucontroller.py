@@ -2,8 +2,10 @@ from views.menuview import MainMenu
 from views.playerview import PlayerView
 from views.tournamentview import TournamentView
 # from views.roundview import RoundView
+from views.reportview import ReportView
 
 from controllers.tournamentcontrolleur import TournamentController
+from controllers.reportcontroller import ReportController
 
 from models.tournament import Tournament
 from models.player import Player
@@ -17,9 +19,11 @@ class MenuController():
         self.menu_view = MainMenu()
         self.tournament_view = TournamentView()
         self.player_view = PlayerView()
+        self.report_view = ReportView()
         # self.round_view = RoundView()
 
         self.tournament_controller = TournamentController()
+        self.report_controller = ReportController()
         
     def main_menu_start(self):
         self.menu_view.print_main_menu_options()
@@ -33,8 +37,10 @@ class MenuController():
             self.update_player()
         elif user_input == 4:
             self.load_an_old_tournament()
+        elif user_input == 5:
+            self.report_menu()
         else: 
-            user_input == 5
+            user_input == 6
             self.exit_the_program()
          
     def creation_of_a_new_player(self):
@@ -152,3 +158,9 @@ class MenuController():
             else:
                 self.tournament_view.print_error_load_tournament()
                 self.load_an_old_tournament()
+    
+    def report_menu(self):
+        self.report_view.report_menu()
+        user_input = self.menu_view.enter_a_number_to_select_a_report_option()
+        if user_input == 1:
+            self.report_controller.all_players_sorted_alphabetically(Player.load_all_players_from_database())
