@@ -170,5 +170,6 @@ class MenuController():
             self.report_controller.name_and_dates_of_a_tournament(Tournament.load_all_tournaments_from_database(self))
         if user_input == 4:
             self.report_controller.list_of_tournament_players_in_alphabetical_order(Tournament.load_all_tournaments_from_database(self))
-            
+        if user_input == 5:
+            self.report_controller.list_all_matches_in_all_rounds(Tournament.load_all_tournaments_from_database(self))
         

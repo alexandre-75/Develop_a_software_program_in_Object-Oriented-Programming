@@ -31,12 +31,12 @@ class MainMenu():
         print("Invalid input. Please enter a number between 1 and 6.")
 
     def enter_a_number_to_select_a_report_option(self):          
-        user_choice = input("Select the desired option (1-#): ")
+        user_choice = input("\n Select the desired option (1-5): ")
         if user_choice.isdigit():
             user_choice = int(user_choice)
-            if user_choice in [1, 2, 3, 4]:
+            if user_choice in [1, 2, 3, 4, 5]:
                 return user_choice
-        print("Invalid input. Please enter a number between 1 and #.")
+        print("Invalid input. Please enter a number between 1 and 5.")
     
     def quit_the_program_now(self):
         print("do you want to quit the program now? (YES or NO) ")

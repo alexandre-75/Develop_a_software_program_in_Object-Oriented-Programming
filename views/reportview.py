@@ -32,6 +32,15 @@ class ReportView ():
             "start_date",
             "end_date",
         ]
+        self.matches_report_field_names = [
+                "Name P1",
+                "Rank P1",
+                "Score P1",
+                " ",
+                "Name P2",
+                "Rank P2",
+                "Score P2"
+            ]
 
     
     def report_menu(self):
@@ -39,7 +48,8 @@ class ReportView ():
             "get all the players present in the DB in alphabetical order (last name)", 
             "list of all tournaments",
             "name and dates of a tournament",
-            "list of tournament players in alphabetical order"
+            "list of tournament players in alphabetical order",
+            "list all matches in all rounds of a tournament"
         ]
         menu = "\n".join([f"{i}- {option}" for i, option in enumerate(options, start=1)])
         return print(menu)
@@ -116,3 +126,24 @@ class ReportView ():
         print(f"tournament_name: {tournmanent_name}")
         print(f"start_date: {start_date}")
         print(f"end_date: {end_date}")
+
+    def display_tournament(self, t):
+        header = (f"id: {t['tournament_id']}, name: {t['tournament_name']}\n" 
+                f"site: {t['tournament_site']}\n" 
+                f"Rounds: {t['current_round']}/{t['number_of_rounds']}\n" 
+                f"start_date: {t['start_date']}\n"
+                f"end_date: {t['end_date']}")
+        print(header)
+     
+    def display_rounds_report(self, round_num, all_matches):
+        self.table.clear()
+        self.table.field_names = self.matches_report_field_names
+        self.table.align = "l"
+        for i in range(len(all_matches)):
+            all_matches[i].insert(3, "vs.")
+            self.table.add_row(all_matches[i])
+        print(f"Round {round_num}:")
+        print(self.table)
+        print("-----------------------------")
+
+    
