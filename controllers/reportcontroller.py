@@ -3,7 +3,9 @@ from views.menuview import MainMenu
 
 
 class ReportController():
+
     def __init__(self):
+        
         self.report_view = ReportView()
         self.menu_view = MainMenu()
 
