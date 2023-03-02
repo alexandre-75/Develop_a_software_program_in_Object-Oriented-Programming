@@ -1,8 +1,8 @@
 from prettytable import PrettyTable
-import os
 
-class ReportView ():
-    
+
+class ReportView():
+
     def __init__(self):
         self.table = PrettyTable()
         self.display_report_header_all_players = [
@@ -12,8 +12,8 @@ class ReportView ():
             "date_of_birth",
             "score_of_player",
             "ranking",
-        ]   
-        self.display_report_header_all_tournaments =[
+        ]
+        self.display_report_header_all_tournaments = [
             "tournament_id",
             "tournament_name",
             "tournament_site",
@@ -24,8 +24,8 @@ class ReportView ():
             "general_remarks",
             "participants"
         ]
-        self.display_header_tournament_id =["tournament_id"]
-        self.display_header_tournament =[
+        self.display_header_tournament_id = ["tournament_id"]
+        self.display_header_tournament = [
             "tournament_id",
             "tournament_name",
             "tournament_site",
@@ -42,10 +42,9 @@ class ReportView ():
                 "Score P2"
             ]
 
-    
     def report_menu(self):
         options = [
-            "get all the players present in the DB in alphabetical order (last name)", 
+            "get all the players present in the DB in alphabetical order (last name)",
             "list of all tournaments",
             "name and dates of a tournament",
             "list of tournament players in alphabetical order",
@@ -67,7 +66,7 @@ class ReportView ():
         self.table.add_rows(rows)
         print("all the players present (last name)")
         print(self.table)
-    
+
     def display_all_tournaments_report(self, tournaments):
         self.table.clear()
         self.table.field_names = self.display_report_header_all_tournaments
@@ -90,8 +89,6 @@ class ReportView ():
                 tournaments[i]["general_remarks"],
                 participants
             ])
-
-        os.system('mode con: cols=200 lines=90')
         print(self.table)
 
     def display_all_tournament_by_id(self, tournaments):
@@ -107,7 +104,7 @@ class ReportView ():
         self.table.add_rows(rows)
         print("all the tournament present sorted by ID")
         print(self.table)
-    
+
     def display_all_tournament(self, tournaments):
         display_field = self.display_header_tournament
         rows = []
@@ -122,20 +119,20 @@ class ReportView ():
         print("all the tournament present sorted by ID")
         print(self.table)
 
-    def display_name_and_dates_tournament (self, tournmanent_name, start_date, end_date):
+    def display_name_and_dates(self, tournmanent_name, start_date, end_date):
         print(f"tournament_name: {tournmanent_name}")
         print(f"start_date: {start_date}")
         print(f"end_date: {end_date}")
 
     def display_tournament(self, t):
-        header = (f"id: {t['tournament_id']}, name: {t['tournament_name']}\n" 
-                f"site: {t['tournament_site']}\n" 
-                f"Rounds: {t['current_round']}/{t['number_of_rounds']}\n" 
-                f"start_date: {t['start_date']}\n"
-                f"end_date: {t['end_date']}")
+        header = (f"id: {t['tournament_id']}, name: {t['tournament_name']}\n"
+                  f"site: {t['tournament_site']}\n"
+                  f"Rounds: {t['current_round']}/{t['number_of_rounds']}\n"
+                  f"start_date: {t['start_date']}\n"
+                  f"end_date: {t['end_date']}")
         print(header)
-     
-    def display_rounds_report(self, round_num, all_matches):
+
+    def display_matches_report(self, round_num, all_matches):
         self.table.clear()
         self.table.field_names = self.matches_report_field_names
         self.table.align = "l"
@@ -145,5 +142,3 @@ class ReportView ():
         print(f"Round {round_num}:")
         print(self.table)
         print("-----------------------------")
-
-    

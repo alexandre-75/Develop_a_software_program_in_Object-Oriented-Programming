@@ -1,7 +1,8 @@
 from prettytable import PrettyTable
 
+
 class RoundView():
-   
+
     def __init__(self):
         self.table = PrettyTable()
         self.round_field_names = [
@@ -14,7 +15,7 @@ class RoundView():
             "Rank P2",
             "Score P2"
         ]
-        
+
     def display_matches(self, matches):
         self.table.clear()
         self.table.field_names = self.round_field_names
@@ -27,11 +28,9 @@ class RoundView():
             self.table.add_row(row)
 
         print(self.table)
-    
+
     def score_options(self, match_number):
         print("Match : ", int(match_number) + 1)
         print('[1] Draw')
         print('[2] Player 1 wins')
         print('[3] Player 2 wins')
-    
-        

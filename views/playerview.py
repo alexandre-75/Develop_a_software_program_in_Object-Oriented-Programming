@@ -2,7 +2,7 @@ class PlayerView():
 
     def __init__(self):
         pass
-      
+
     def summary_of_new_player_created(self, info):
         print("---------- summary of new player created ----------")
         print(f"first name : {info['first_name']}")
@@ -11,7 +11,7 @@ class PlayerView():
         print(f"Player ID : {info['player_id']}")
         print(f"Score of player: {info['score_of_player']}")
         print(f"Rank : {info['ranking']}")
-    
+
     def player_message_is_saved_in_the_database(self):
         print("player information is correctly saved in the database")
 
@@ -22,7 +22,7 @@ class PlayerView():
         print("id, Last Name, First Name")
         for i, player in enumerate(players):
             print(f"{i+1} - {player['last_name']} {player['first_name']} (id: {player['player_id']})")
-   
+
     def display_player_update_options(self, selected_player, options):
         for i, option in enumerate(options):
             print(f"[{i+1}] Update {option}")
