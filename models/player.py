@@ -1,8 +1,9 @@
-from tinydb import TinyDB, Query, where
+from tinydb import TinyDB, where
+
 
 class Player():
-    
-    def __init__(self, first_name, last_name, date_of_birth, player_id, score_of_player=0, ranking=1): 
+
+    def __init__(self, first_name, last_name, date_of_birth, player_id, score_of_player=0, ranking=1):
         self.first_name = str(first_name)
         self.last_name = str(last_name)
         self.date_of_birth = str(date_of_birth)
@@ -11,15 +12,15 @@ class Player():
         self.ranking = int(ranking)
         self.adversary = []
         self.players_database = TinyDB("database/players.json", indent=4)
- 
+
     def format_player_in_database(self):
-        return {"player_id":self.player_id,
-                "first_name":self.first_name,
-                "last_name":self.last_name, 
-                "date_of_birth":self.date_of_birth,
-                "score_of_player":self.score_of_player,
-                "ranking":self.ranking,
-                "adversary":self.adversary}
+        return {"player_id": self.player_id,
+                "first_name": self.first_name,
+                "last_name": self.last_name,
+                "date_of_birth": self.date_of_birth,
+                "score_of_player": self.score_of_player,
+                "ranking": self.ranking,
+                "adversary": self.adversary}
 
     def save_player_in_database(self):
         return self.players_database.insert(self.format_player_in_database())
