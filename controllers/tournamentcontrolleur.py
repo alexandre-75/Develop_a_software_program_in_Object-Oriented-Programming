@@ -7,6 +7,7 @@ from views.roundview import RoundView
 
 from utils.date_and_time import get_times
 
+
 class TournamentController():
 
     def __init__(self):
@@ -19,10 +20,10 @@ class TournamentController():
     def select_player_list(self, num_players):
         """
      Selects a specified number of players from the database of all players.
-     args:
-         num_players (int): The number of players to select.  
-     Returns:
-         list: A list of dictionaries representing the selected players.   
+     args :
+         num_players (int) :The number of players to select.
+     Returns :
+         list: A list of dictionaries representing the selected players.
      Raises:
          None
      """
@@ -42,30 +43,46 @@ class TournamentController():
                 else:
                     self.tournament_view.invalid_player_id()
         self.selected_players
-        return  self.selected_players
-    
+        return self.selected_players
+
     def start_tournament(self, tournament):
         if tournament.current_round == 1:
             tournament.start_date = get_times()
             tournament.update_timer(tournament.start_date, 'start_date', tournament.tournament_id)
-            self.round_one_tournament(tournament)
-            tournament.current_round += 1
+
+            print("test1")
+            self.round_tournament(tournament, tournament.current_round)
             tournament.update_tournament_from_database()
+            tournament.current_round += 1
             while tournament.current_round <= tournament.number_of_rounds:
                 self.next_rounds(tournament)
-                tournament.current_round += 1
+
+                print('-------------------------------------')
+                # if tournament.current_round == tournament.number_of_rounds:
+                #     tournament.end_date = get_times()
+                #     tournament.update_tournament_from_database()
+                # # self.round_tournament(tournament, tournament.current_round)
+                # else:
                 tournament.update_tournament_from_database()
+                tournament.current_round += 1
+            # self.next_rounds(tournament)
+            tournament.end_date = get_times()
+            tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
+            print("fini")
         elif 1 < tournament.current_round <= tournament.number_of_rounds:
             pass
-        else: 
+        else:
             tournament.current_round > tournament.number_of_rounds
             pass
-    
-    def round_one_tournament(self,tournament):
-        round = Round("round1")
+
+    def round_tournament(self, tournament, round_number):
+        round = Round(f"round{round_number}")
         a = self.selected_players
+        print(a)
         b = len(a) // 2
         top_players, bottom_players = tournament.split_players(a)
+        print(type(top_players))
+        print(bottom_players)
         for i in range(int(b)):
             round.add_match_to_list(top_players[i], bottom_players[i])
             top_players[i], bottom_players[i] = self.update_adversary(top_players[i], bottom_players[i])
@@ -94,7 +111,7 @@ class TournamentController():
     def update_scores_and_return_players(self, scores_list, tournament):
         a = self.selected_players
         b = len(a) // 2
-        for i in range(int(b)): 
+        for i in range(int(b)):
             self.round_view.score_options(i)
             user_input = input("enter a number [1] [2] or [3] : ")
             scores_list = self.get_score(user_input, scores_list)
@@ -109,86 +126,31 @@ class TournamentController():
 
     def update_scores_of_players(self, players, scores_list):
         for i in range(len(players)):
+            print("hello")
             players[i]["score_of_player"] += scores_list[i]
         return players
 
     def next_rounds(self, tournament):
         round = Round("round " + str(tournament.current_round))
-        tournament.sort_players_by_score()
-        available_list = tournament.players
-        print("hella")
-        print(available_list)
-        print(len(available_list))
-        print("hello")
-        players_added = []
-
-        i = 0
-        while i < tournament.number_of_rounds:
-            print (i)
-            print(available_list[i]["player_id"])
-            print(available_list[0]["adversary"])
-            print("------------")
-            if available_list[1]["player_id"] in available_list[0]["adversary"]:
-                print("hector")
-                try:
-                    available_list, players_added = self.match_other_option(available_list, players_added, round)
-                    print("888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
-                    tournament.players = players_added
-
-                except IndexError:
-                    available_list, players_added = self.match_first_option(available_list, players_added, round)
-                    print("ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
-                    tournament.players = players_added
-
-            elif available_list[1]["player_id"] not in available_list[0]["adversary"]:
-                print("hectar")
-                available_list, players_added = self.match_first_option(available_list, players_added, round)
-                tournament.players = players_added
-
-            i += 1
-
-        self.round_view.display_matches(r.matches)
-
-        self.round_view.round_over()
-        self.menu_view.input_prompt()
-        user_input = input().lower()
+        a = tournament.sort_players_by_score()
+        print("yyyyyyyy")
+        b = len(a) // 2
+        top_players, bottom_players = tournament.split_players(a)
+        print(top_players)
+        print(bottom_players)
+        print(len(a))
+        for i in range(int(b)):
+            round.add_match_to_list(top_players[i], bottom_players[i])
+            top_players[i], bottom_players[i] = self.update_adversary(top_players[i], bottom_players[i])
+        self.round_view.display_matches(round.matches_list)
+        user_input = str(input("when the round is over enter [a] or else enter [b] ")).lower()
         scores_list = []
+        if user_input == "a":
+            tournament.rounds.append(round.all_information_round())
+            self.update_scores_and_return_players(scores_list, tournament)
 
-        if user_input == "ok":
-            r.end_datetime = self.timer
-            t.rounds.append(r.set_round())
-            self.end_of_round(scores_list, t)
-
-        elif user_input == "back":
+        elif user_input == "b":
             self.back_to_menu()
-    
- 
-    def match_first_option(self, available_list, players_added, round):
-        round.add_match_to_list(available_list[0], available_list[1])
-        available_list[0], available_list[1] = self.update_adversary(available_list[0], available_list[1])
-
-        available_list, players_added = self.update_player_lists(
-            available_list[0],
-            available_list[1],
-            available_list,
-            players_added
-        )
-        # return available_list,
-        return available_list, players_added,
-
-    
-    def match_other_option(self, available_list, players_added, round):
-        round.add_match_to_list(available_list[0], available_list[2])
-        available_list[0], available_list[2] = self.update_adversary(available_list[0], available_list[2])
-
-        available_list, players_added = self.update_player_lists(
-            available_list[0],
-            available_list[2],
-            available_list,
-            players_added
-        )
-
-        return available_list, players_added
 
     @staticmethod
     def update_player_lists(player_1, player_2, available_list, players_added):
@@ -198,4 +160,3 @@ class TournamentController():
         available_list.remove(player_2)
 
         return available_list, players_added
-    
