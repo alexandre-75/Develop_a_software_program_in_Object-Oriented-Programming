@@ -135,7 +135,6 @@ class MenuController():
             self.update_player()
 
     def exit_the_program(self):
-
         self.menu_view.quit_the_program_now()
         user_input = str(input()).lower()
         if user_input == "yes":
@@ -152,28 +151,8 @@ class MenuController():
         for tournament in tournament_list:
             if user_input == str(tournament["tournament_id"]):
                 selected_tournament = tournament
-                if selected_tournament is not None:
-
-                    # print(selected_tournament["rounds"])
-                    print(selected_tournament["players"])
-                    # rounds=[]
-                    # players=[]
-                    tournament = Tournament(
-                        tournament_id=selected_tournament["tournament_id"],
-                        tournament_name=selected_tournament["tournament_name"],
-                        tournament_site=selected_tournament["tournament_site"],
-                        start_date=selected_tournament["start_date"],
-                        end_date=selected_tournament["end_date"],
-                        number_of_rounds=selected_tournament["number_of_rounds"],
-                        current_round=selected_tournament["current_round"],
-                        general_remarks=selected_tournament["general_remarks"]
-                        # rounds=selected_tournament["rounds"],
-                        # players=str(selected_tournament["players"])
-                    )
-                    print('tata')
-                    self.tournament_controller.start_tournament(tournament)
-                    print("ok")
-                    # return print(tournament.players)
+                a = Tournament.deserialize_tournament(self, selected_tournament)
+                self.tournament_controller.start_tournament(a)
 
     def report_menu(self):
         self.report_view.report_menu()

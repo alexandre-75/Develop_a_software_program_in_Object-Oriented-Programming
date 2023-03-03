@@ -18,15 +18,6 @@ class TournamentController():
         self.selected_players = []
 
     def select_player_list(self, num_players):
-        """
-     Selects a specified number of players from the database of all players.
-     args :
-         num_players (int) :The number of players to select.
-     Returns :
-         list: A list of dictionaries representing the selected players.
-     Raises:
-         None
-     """
         players = Player.load_all_players_from_database()
         player_ids = [p['player_id'] for p in players]
         for i in range(num_players):
@@ -49,40 +40,29 @@ class TournamentController():
         if tournament.current_round == 1:
             tournament.start_date = get_times()
             tournament.update_timer(tournament.start_date, 'start_date', tournament.tournament_id)
-
-            print("test1")
             self.round_tournament(tournament, tournament.current_round)
             tournament.update_tournament_from_database()
             tournament.current_round += 1
             while tournament.current_round <= tournament.number_of_rounds:
                 self.next_rounds(tournament)
-
-                print('-------------------------------------')
-                # if tournament.current_round == tournament.number_of_rounds:
-                #     tournament.end_date = get_times()
-                #     tournament.update_tournament_from_database()
-                # # self.round_tournament(tournament, tournament.current_round)
-                # else:
                 tournament.update_tournament_from_database()
                 tournament.current_round += 1
-            # self.next_rounds(tournament)
             tournament.end_date = get_times()
             tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
-            print("fini")
-        elif 1 < tournament.current_round <= tournament.number_of_rounds:
-            pass
         else:
-            tournament.current_round > tournament.number_of_rounds
-            pass
+            1 < tournament.current_round <= tournament.number_of_rounds
+            while tournament.current_round <= tournament.number_of_rounds:
+                #
+                tournament.current_round += 1
+                tournament.update_tournament_from_database()
+            tournament.end_date = get_times()
+            tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
 
     def round_tournament(self, tournament, round_number):
         round = Round(f"round{round_number}")
         a = self.selected_players
-        print(a)
         b = len(a) // 2
         top_players, bottom_players = tournament.split_players(a)
-        print(type(top_players))
-        print(bottom_players)
         for i in range(int(b)):
             round.add_match_to_list(top_players[i], bottom_players[i])
             top_players[i], bottom_players[i] = self.update_adversary(top_players[i], bottom_players[i])
@@ -92,7 +72,6 @@ class TournamentController():
         if user_input == "a":
             tournament.rounds.append(round.all_information_round())
             self.update_scores_and_return_players(scores_list, tournament)
-
         elif user_input == "b":
             self.back_to_menu()
 
@@ -100,7 +79,6 @@ class TournamentController():
     def update_adversary(top_players, bottom_players):
         top_players["adversary"].append(bottom_players["player_id"])
         bottom_players["adversary"].append(top_players["player_id"])
-        # print(player_1)
         return top_players, bottom_players
 
     @staticmethod
@@ -126,19 +104,14 @@ class TournamentController():
 
     def update_scores_of_players(self, players, scores_list):
         for i in range(len(players)):
-            print("hello")
             players[i]["score_of_player"] += scores_list[i]
         return players
 
     def next_rounds(self, tournament):
         round = Round("round " + str(tournament.current_round))
         a = tournament.sort_players_by_score()
-        print("yyyyyyyy")
         b = len(a) // 2
         top_players, bottom_players = tournament.split_players(a)
-        print(top_players)
-        print(bottom_players)
-        print(len(a))
         for i in range(int(b)):
             round.add_match_to_list(top_players[i], bottom_players[i])
             top_players[i], bottom_players[i] = self.update_adversary(top_players[i], bottom_players[i])
@@ -148,15 +121,12 @@ class TournamentController():
         if user_input == "a":
             tournament.rounds.append(round.all_information_round())
             self.update_scores_and_return_players(scores_list, tournament)
-
         elif user_input == "b":
             self.back_to_menu()
 
     @staticmethod
     def update_player_lists(player_1, player_2, available_list, players_added):
-
         players_added.extend([player_1, player_2])
         available_list.remove(player_1)
         available_list.remove(player_2)
-
         return available_list, players_added

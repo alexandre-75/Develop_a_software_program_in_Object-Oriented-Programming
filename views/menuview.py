@@ -16,13 +16,6 @@ class MainMenu():
         """)
 
     def enter_a_number_to_select_a_main_menu_option(self):
-
-        """Ask the user to select a main menu option by entering a number between 1 and 6.
-        Returns:
-        - An integer value corresponding to the selected option.
-        Raises:
-        - ValueError if the input is not a valid integer between 1 and 6."""
-
         user_choice = input("Select the desired option (1-6): ")
         if user_choice.isdigit():
             user_choice = int(user_choice)

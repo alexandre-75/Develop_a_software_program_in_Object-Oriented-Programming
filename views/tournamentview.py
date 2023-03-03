@@ -25,7 +25,6 @@ class TournamentView():
         print("the identifier is not recognized, try again")
 
     def select_tournament(self, tournaments_list):
-
         if len(tournaments_list) == 0:
             print("No tournaments found.")
         else:

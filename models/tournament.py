@@ -33,6 +33,19 @@ class Tournament():
             "players": self.players
         }
 
+    def deserialize_tournament(self, serialized_tournament):
+        self.tournament_id = serialized_tournament['tournament_id']
+        self.tournament_name = serialized_tournament['tournament_name']
+        self.tournament_site = serialized_tournament['tournament_site']
+        self.start_date = serialized_tournament['start_date']
+        self.end_date = serialized_tournament['end_date']
+        self.number_of_rounds = serialized_tournament['number_of_rounds']
+        self.current_round = serialized_tournament['current_round']
+        self.general_remarks = serialized_tournament['general_remarks']
+        self.rounds = serialized_tournament['rounds']
+        self.players = serialized_tournament['players']
+        return self
+
     def save_tournament_in_database(self):
         return self.tournaments_database.insert(self.format_tournament_in_database())
 
@@ -45,15 +58,10 @@ class Tournament():
         database.update({key: value}, where("tournament_id") == tournament_id)
 
     def sort_players_by_rank(self):
-        print(self.players)
         return self.players.sort(key=lambda player: player['rank'])
 
     def sort_players_by_score(self):
-        print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-        print(self.players)
-        print("tontotntnotontnotnto")
         self.players.sort(key=lambda player: player['score_of_player'])
-        print(self.players)
         return self.players
 
     def split_players(self, a):

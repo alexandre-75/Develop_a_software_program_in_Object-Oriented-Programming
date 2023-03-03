@@ -141,4 +141,3 @@ class ReportView():
             self.table.add_row(all_matches[i])
         print(f"Round {round_num}:")
         print(self.table)
-        print("-----------------------------")
