@@ -37,3 +37,6 @@ class MainMenu():
     def enter_a_id(self):
         user_choice = input("select the desired ID : ")
         return user_choice
+    
+    def ergonomics(self):
+        print("\n---------------------")

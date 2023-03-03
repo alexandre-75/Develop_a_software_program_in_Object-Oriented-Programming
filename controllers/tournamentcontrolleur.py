@@ -49,6 +49,7 @@ class TournamentController():
                 tournament.current_round += 1
             tournament.end_date = get_times()
             tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
+            print("tournament finished goodbye")
         else:
             1 < tournament.current_round <= tournament.number_of_rounds
             while tournament.current_round <= tournament.number_of_rounds:
@@ -57,6 +58,7 @@ class TournamentController():
                 tournament.update_tournament_from_database()
             tournament.end_date = get_times()
             tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
+            print("tournament finished goodbye")
 
     def round_tournament(self, tournament, round_number):
         round = Round(f"round{round_number}")

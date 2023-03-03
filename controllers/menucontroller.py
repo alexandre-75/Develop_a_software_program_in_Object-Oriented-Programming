@@ -26,7 +26,6 @@ class MenuController():
     def main_menu_start(self):
         self.menu_view.print_main_menu_options()
         user_input = self.menu_view.enter_a_number_to_select_a_main_menu_option()
-        print(user_input)
         if user_input == 1:
             self.creation_of_a_new_tournament()
         elif user_input == 2:
@@ -44,24 +43,46 @@ class MenuController():
     def creation_of_a_new_player(self):
         player_information = {}
         options = {
-            "first_name": "frist name",
             "last_name": "last name",
+            "first_name": "frist name",
             "date_of_birth": "Date of birth (DD-MM-YYYY)",
             "player_id": "player id",
             "score_of_player": "score of player",
             "ranking": "ranking"
         }
+        self.player_view.exit_save_player()
         for key, value in options.items():
+            self.menu_view.ergonomics()
+            if value == "last name":
+                pass
+            else:
+                self.player_view.exit_save_player()
             user_input = ""
-            while not user_input:
-                user_input = input(f"{value}: ")
-            player_information[key] = user_input
+            user_input = input(f"{value}: ").lower()
+            if user_input == "quit":
+                if value == "last name":
+                    self.player_view.exit_player_creation_or_continue()
+                    user_input = input()
+                    if user_input == "b":
+                        self.main_menu_start()
+                    else:
+                        self.creation_of_a_new_player()
+                else:
+                    player = Player(**player_information)
+                    player.save_player_in_database()
+                    self.menu_view.ergonomics()
+                    self.player_view.player_message_is_saved_in_the_database()
+                    self.main_menu_start()
+            else:
+                player_information[key] = user_input
         self.player_view.summary_of_new_player_created(player_information)
+        self.menu_view.ergonomics()
         user_input = input("Do you confirm player information ? (YES ou NO) ").lower()
         if user_input == "yes":
             player = Player(**player_information)
             player.save_player_in_database()
             self.player_view.player_message_is_saved_in_the_database()
+            self.menu_view.ergonomics()
             self.main_menu_start()
         else:
             self.creation_of_a_new_player()

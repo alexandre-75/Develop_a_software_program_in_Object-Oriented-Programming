@@ -26,3 +26,11 @@ class PlayerView():
     def display_player_update_options(self, selected_player, options):
         for i, option in enumerate(options):
             print(f"[{i+1}] Update {option}")
+    
+    def exit_save_player(self):
+        print("write [quit] to stop saving")
+
+    def exit_player_creation_or_continue(self):
+        print("enter the last name at least")
+        print("press [b] to exit without creating a player otherwise press [a] to continue")
+
