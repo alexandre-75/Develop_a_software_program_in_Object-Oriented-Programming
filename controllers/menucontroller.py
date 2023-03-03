@@ -31,13 +31,15 @@ class MenuController():
         elif user_input == 2:
             self.creation_of_a_new_player()
         elif user_input == 3:
-            self.update_player()
+            self.load_an_old_profile()
         elif user_input == 4:
-            self.load_an_old_tournament()
+            self.update_player()
         elif user_input == 5:
+            self.load_an_old_tournament()
+        elif user_input == 6:
             self.report_menu()
         else:
-            user_input == 6
+            user_input == 7
             self.exit_the_program()
 
     def creation_of_a_new_player(self):
@@ -188,3 +190,40 @@ class MenuController():
             self.report_controller.list_of_tournament(Tournament.load_all_tournaments_from_database(self))
         if user_input == 5:
             self.report_controller.list_all_matches_in_all_rounds(Tournament.load_all_tournaments_from_database(self))
+    
+    def load_an_old_profile(self):
+        player_list = Player.load_all_players_from_database()
+        self.report_controller.all_players_sorted_alphabetically(player_list)
+        user_input = input("enter a last name : ")
+        for player in player_list:
+            if player["last_name"] == user_input:
+                options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
+                self.player_view.display_player_update_options(options)
+                option_index = int(input("Enter a number to select the option: ")) - 1
+
+                if option_index <= len(options):
+                    option = options[option_index]
+                    new_value = input(f"Enter {option}: ")
+                    if option == options[4] or options[5]:
+                        new_value = int(new_value)
+
+                    p = Player(
+                        player['last_name'],
+                        player['first_name'],
+                        player['date_of_birth'],
+                        player['player_id'],
+                        player['score_of_player'],
+                        player['ranking'])
+
+                    p.update_player_in_database(option, new_value)
+                    self.player_view.player_message_is_saved_in_the_database()
+                    user_input_2 = str(input("do you still want to change a player's settings? [yes][no] "))
+                    if user_input_2 == "yes":
+                        self.load_an_old_profile()
+                    else:
+                        self.main_menu_start()
+
+                else:
+                    self.menu_view.ergonomics()
+                    self.player_view.player_message_not_saved_in_the_database()
+                    self.load_an_old_profile()

@@ -9,19 +9,20 @@ class MainMenu():
         print("""
         1. Start a Tournament
         2. Add a new player to the database
-        3. Update a player in the database
-        4. Load an old tournament
-        5. select a type of report
-        6. Quit
+        3. Load an old profile and continue registration
+        4. Update a player in the database
+        5. Load an old tournament
+        6. select a type of report
+        7. Quit
         """)
 
     def enter_a_number_to_select_a_main_menu_option(self):
-        user_choice = input("Select the desired option (1-6): ")
+        user_choice = input("Select the desired option (1-7): ")
         if user_choice.isdigit():
             user_choice = int(user_choice)
-            if user_choice in [1, 2, 3, 4, 5, 6]:
+            if user_choice in [1, 2, 3, 4, 5, 6, 7]:
                 return user_choice
-        print("Invalid input. Please enter a number between 1 and 6.")
+        print("Invalid input. Please enter a number between 1 and 7.")
 
     def enter_a_number_to_select_a_report_option(self):
         user_choice = input("\n Select the desired option (1-5): ")

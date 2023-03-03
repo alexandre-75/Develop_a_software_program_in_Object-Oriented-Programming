@@ -3,7 +3,7 @@ from tinydb import TinyDB, where
 
 class Player():
 
-    def __init__(self, first_name, last_name, date_of_birth, player_id, score_of_player=0, ranking=1):
+    def __init__(self, first_name="", last_name="", date_of_birth="", player_id="", score_of_player=0, ranking=1):
         self.first_name = str(first_name)
         self.last_name = str(last_name)
         self.date_of_birth = str(date_of_birth)
