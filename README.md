@@ -9,6 +9,11 @@
 - Write robust Python code using <b>PEP 8</b> style guide.
 - Work with a <b>database</b> of JSON type <b>(TinyDB)</b>.
 
+## Context
+
+The project is an offline chess tournament application, 
+this application will replace the old one due to many problems due to internet connection problems.
+
 ##  Project download
 
 _Tested on Windows 10, Python 3.10.6._
