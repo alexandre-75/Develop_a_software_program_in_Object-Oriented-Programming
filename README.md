@@ -12,6 +12,8 @@
 ##  Project download
 
 _Tested on Windows 10, Python 3.10.6._
+[technical specifications](https://course.oc-static.com/projects/Python+FR/P4+-+D%C3%A9veloppez+un+programme+logiciel+en+utilisant+Python/Spe%CC%81cification+technique_De%CC%81veloppez+un+programme+logiciel+en+Python.pdf)
+
 ####  1. project recovery
 
     $ git clone https://github.com/alexandre-75/Develop_a_software_program_in_Object-Oriented-Programming.git
@@ -49,6 +51,7 @@ Then you will be guided.
 ## Generate a flake8 report
     
 flake8 can identify syntax errors and non-compliance with the PEP.
+
 An html report containing any errors may be generated.
 
 It is in the folder:
