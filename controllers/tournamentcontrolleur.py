@@ -18,6 +18,13 @@ class TournamentController():
         self.selected_players = []
 
     def select_player_list(self, num_players):
+
+        """
+        Selects a list of players for a tournament, based on user input.
+        @param num_players: An integer representing the number of players to select.
+        @return: A list of dictionaries, each representing a selected player.
+        """
+
         players = Player.load_all_players_from_database()
         player_ids = [p['player_id'] for p in players]
         for i in range(num_players):
@@ -37,6 +44,13 @@ class TournamentController():
         return self.selected_players
 
     def start_tournament(self, tournament):
+
+        """
+        Starts the tournament by running all rounds, updating the start and end dates,
+        and displaying a farewell message.
+        @param tournament: A dictionary representing the tournament to start.
+        """
+
         if tournament.current_round == 1:
             tournament.start_date = get_times()
             tournament.update_timer(tournament.start_date, 'start_date', tournament.tournament_id)
@@ -61,6 +75,13 @@ class TournamentController():
             print("tournament finished goodbye")
 
     def round_tournament(self, tournament, round_number):
+
+        """
+        Runs a single round of the tournament by pairing up players, creating matches, and updating scores.
+        @param tournament: A dictionary representing the tournament to round.
+        @param round_number: An integer representing the current round number.
+        """
+
         round = Round(f"round{round_number}")
         a = self.selected_players
         b = len(a) // 2
@@ -79,6 +100,14 @@ class TournamentController():
 
     @staticmethod
     def update_adversary(top_players, bottom_players):
+
+        """
+        Updates the adversary attribute of two players to include each other's IDs.
+        @param top_players: A dictionary representing the player with a higher score.
+        @param bottom_players: A dictionary representing the player with a lower score.
+        @return: A tuple containing the updated dictionaries.
+        """
+
         top_players["adversary"].append(bottom_players["player_id"])
         bottom_players["adversary"].append(top_players["player_id"])
         return top_players, bottom_players
@@ -89,6 +118,14 @@ class TournamentController():
         MenuController().main_menu_start()
 
     def update_scores_and_return_players(self, scores_list, tournament):
+
+        """
+        Updates the scores of the players in a tournament based on user input, and returns the updated player list.
+        @param scores_list: A list of integers representing the scores for each match.
+        @param tournament: A dictionary representing the tournament to update.
+        @return: A list of dictionaries representing the updated player list.
+        """
+
         a = self.selected_players
         b = len(a) // 2
         for i in range(int(b)):
@@ -99,17 +136,41 @@ class TournamentController():
         return tournament.players
 
     def get_score(self, user_input, scores_list):
+
+        """
+        Given user input, updates a list of scores with the appropriate score based on the input.    
+        @param user_input: A string representing the user's input for the score.
+        @param scores_list: A list of integers representing the scores for each match.
+        @return: A list of integers representing the updated scores.
+        """
+
         score_dict = {"1": [0.5, 0.5], "2": [1.0, 0.0], "3": [0.0, 1.0]}
         if user_input in score_dict:
             scores_list.extend(score_dict[user_input])
         return scores_list
 
     def update_scores_of_players(self, players, scores_list):
+
+        """
+        Updates the scores of players based on the scores in the provided list.
+        
+        @param players: A list of dictionaries representing the players.
+        @param scores_list: A list of integers representing the scores for each match.
+        @return: A list of dictionaries representing the updated players.
+        """
+
         for i in range(len(players)):
             players[i]["score_of_player"] += scores_list[i]
         return players
 
     def next_rounds(self, tournament):
+
+        """
+        Play the next round of the tournament.
+        Args: tournament (Tournament): The tournament object to play the round for.
+        Returns: None
+        """
+
         round = Round("round " + str(tournament.current_round))
         a = tournament.sort_players_by_score()
         b = len(a) // 2
@@ -128,6 +189,18 @@ class TournamentController():
 
     @staticmethod
     def update_player_lists(player_1, player_2, available_list, players_added):
+
+        """
+        Static method to update the available list of players and the list of players added to a tournament.
+        Args:
+        player_1 (dict): The first player to be added.
+        player_2 (dict): The second player to be added.
+        available_list (list): A list of available players.
+        players_added (list): A list of players already added to the tournament.
+        Returns:
+        tuple: A tuple containing the updated available list and the list of players added.
+        """
+        
         players_added.extend([player_1, player_2])
         available_list.remove(player_1)
         available_list.remove(player_2)
