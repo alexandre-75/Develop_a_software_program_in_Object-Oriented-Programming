@@ -18,8 +18,16 @@ class Tournament():
         self.players = []
 
         self.tournaments_database = TinyDB('database/tournaments.json', indent=4)
+    
+    def repr(self):
+        print(self.rounds, self.end_date)
 
     def format_tournament_in_database(self):
+
+        """
+        Return a dictionary of the tournament information formatted for storage in the database.
+        """
+
         return {
             "tournament_id": self.tournament_id,
             "tournament_name": self.tournament_name,
@@ -33,44 +41,73 @@ class Tournament():
             "players": self.players
         }
 
-    def deserialize_tournament(self, serialized_tournament):
-        self.tournament_id = serialized_tournament['tournament_id']
-        self.tournament_name = serialized_tournament['tournament_name']
-        self.tournament_site = serialized_tournament['tournament_site']
-        self.start_date = serialized_tournament['start_date']
-        self.end_date = serialized_tournament['end_date']
-        self.number_of_rounds = serialized_tournament['number_of_rounds']
-        self.current_round = serialized_tournament['current_round']
-        self.general_remarks = serialized_tournament['general_remarks']
-        self.rounds = serialized_tournament['rounds']
-        self.players = serialized_tournament['players']
-        return self
-
     def save_tournament_in_database(self):
+
+        """
+        Save the tournament information to the database.
+        """
+
         return self.tournaments_database.insert(self.format_tournament_in_database())
 
     def load_all_tournaments_from_database(self):
+
+        """
+        Load all tournaments from the database.
+        """
+
         tournaments_database = TinyDB('database/tournaments.json')
         return tournaments_database.all()
 
     def update_timer(self, value, key, tournament_id):
+
+        """
+        Update the tournament timer value in the database.
+        Parameters:
+        value: str The new value of the timer.
+        key: str  The name of the key to update.
+        tournament_id: str  The unique identifier of the tournament.
+        """
+
         database = self.tournaments_database
         database.update({key: value}, where("tournament_id") == tournament_id)
 
     def sort_players_by_rank(self):
+
+        """
+        Sort the players in the tournament by rank.
+        """
+
         return self.players.sort(key=lambda player: player['rank'])
 
     def sort_players_by_score(self):
+
+        """
+        Sort the players in the tournament by score.
+        """
         self.players.sort(key=lambda player: player['score_of_player'])
         return self.players
 
     def split_players(self, a):
+
+        """
+        Splits a list of players into two halves of equal length.
+        Args:
+        a (list): List of players.
+        Returns:
+        tuple: A tuple containing two halves of the original list, split at the middle.
+        """
+
         half = len(a) // 2
         top_half = a[:half]
         bottom_half = a[half:]
         return top_half, bottom_half
 
     def update_tournament_from_database(self):
+
+        """
+        Updates a tournament record in the database with the current state of the Tournament instance.
+        """
+        
         db = self.tournaments_database
         db.update({'rounds': self.rounds}, where('tournament_id') == self.tournament_id)
         db.update({'players': self.players}, where('tournament_id') == self.tournament_id)
