@@ -12,6 +12,7 @@
 ##  Project download
 
 _Tested on Windows 10, Python 3.10.6._
+
 [technical specifications](https://course.oc-static.com/projects/Python+FR/P4+-+D%C3%A9veloppez+un+programme+logiciel+en+utilisant+Python/Spe%CC%81cification+technique_De%CC%81veloppez+un+programme+logiciel+en+Python.pdf)
 
 ####  1. project recovery
@@ -27,7 +28,7 @@ _Tested on Windows 10, Python 3.10.6._
 ####  3. Installing packages
     pip<version> install -r requirements.txt
     
-####  4.Start the program
+####  4. Start the program
     $ python main.py
 
 ## Use of the program
