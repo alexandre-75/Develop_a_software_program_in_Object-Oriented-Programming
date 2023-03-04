@@ -146,16 +146,27 @@ class MenuController():
             p['ranking']
         )
         options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
-        self.player_view.display_player_update_options(p, options)
+        self.player_view.display_player_update_options(options)
         option_index = int(input("Enter a number to select the option: ")) - 1
+        new_value = None  # initialiser à None
         if option_index <= len(options):
             option = options[option_index]
-            new_value = input(f"Enter new {option}: ")
+            if option == "score_of_player" or option == "ranking":
+                new_value = int(input(f"Entrez {option} : "))
+            elif option == "player_id":
+                self.menu_view.ergonomics()
+                self.player_view.non_editable_value()
+                self.update_player()
+                return  # sauter le reste de la méthode
+            else:
+                new_value = input(f"Entrez {option} : ")
             p.update_player_in_database(option, new_value)
             self.player_view.player_message_is_saved_in_the_database()
+            self.main_menu_start()
         else:
             self.player_view.player_message_not_saved_in_the_database()
             self.update_player()
+
 
     def exit_the_program(self):
         self.menu_view.quit_the_program_now()
