@@ -99,10 +99,30 @@ class MenuController():
             "number_of_rounds": "Number of rounds",
             "general_remarks": "General remarks"
         }
+        self.player_view.exit_save_player()
         for key, value in options.items():
-            user_input = input(f"{value}: ")
-            tournament_info[key] = user_input
-
+            self.menu_view.ergonomics()
+            if value == "Tournament ID":
+                pass
+            else:
+                self.player_view.exit_save_player()
+            user_input =""
+            user_input = input(f"{value}: ").lower()
+            if user_input == "quit":
+                if value == "Tournament ID":
+                    self.tournament_view.exit_tournament_creation_or_continue()
+                    user_input = input()
+                    if user_input == "b":
+                        self.main_menu_start()
+                    else:
+                        self.creation_of_a_new_tournament()
+                else:
+                    tournament = Tournament(**tournament_info)
+                    tournament.save_tournament_in_database()
+                    self.tournament_view.tournament_message_is_saved_in_the_database()
+                    self.main_menu_start()
+            else:
+                tournament_info[key] = user_input
         player_present_in_the_tournament = self.tournament_controller.select_player_list(4)
         self.tournament_view.summary_of_new_tournament_created(tournament_info, player_present_in_the_tournament)
 
@@ -166,7 +186,6 @@ class MenuController():
         else:
             self.player_view.player_message_not_saved_in_the_database()
             self.update_player()
-
 
     def exit_the_program(self):
         self.menu_view.quit_the_program_now()

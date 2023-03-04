@@ -31,7 +31,7 @@ class PlayerView():
         print("write [quit] to stop saving")
 
     def exit_player_creation_or_continue(self):
-        print("enter the last name at least")
+        print("enter the player_id at least")
         print("press [b] to exit without creating a player otherwise press [a] to continue")
     
     def non_editable_value(self):

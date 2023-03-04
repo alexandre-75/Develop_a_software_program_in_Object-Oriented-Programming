@@ -3,8 +3,8 @@ from tinydb import TinyDB, where
 
 class Tournament():
 
-    def __init__(self, tournament_id, tournament_name, tournament_site,
-                 start_date, end_date, number_of_rounds=4, current_round=1,
+    def __init__(self, tournament_id="", tournament_name="", tournament_site="",
+                 start_date="", end_date="", number_of_rounds=4, current_round=1,
                  general_remarks="", players=[], rounds=[]):
         self.tournament_id = str(tournament_id)
         self.tournament_name = str(tournament_name)

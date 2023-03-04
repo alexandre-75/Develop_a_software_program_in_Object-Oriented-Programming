@@ -44,3 +44,7 @@ class TournamentView():
 
     def print_error_load_tournament(self):
         print("an error while loading, enter a valid id")
+
+    def exit_tournament_creation_or_continue(self):
+        print("enter the tournament_id at least")
+        print("press [b] to exit without creating a tournmanent otherwise press [a] to continue")
