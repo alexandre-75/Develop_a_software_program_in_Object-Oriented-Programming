@@ -45,24 +45,24 @@ class MenuController():
     def creation_of_a_new_player(self):
         player_information = {}
         options = {
+            "player_id": "player id",
             "last_name": "last name",
             "first_name": "frist name",
             "date_of_birth": "Date of birth (DD-MM-YYYY)",
-            "player_id": "player id",
             "score_of_player": "score of player",
             "ranking": "ranking"
         }
         self.player_view.exit_save_player()
         for key, value in options.items():
             self.menu_view.ergonomics()
-            if value == "last name":
+            if value == "player id":
                 pass
             else:
                 self.player_view.exit_save_player()
             user_input = ""
             user_input = input(f"{value}: ").lower()
             if user_input == "quit":
-                if value == "last name":
+                if value == "player id":
                     self.player_view.exit_player_creation_or_continue()
                     user_input = input()
                     if user_input == "b":
@@ -194,18 +194,24 @@ class MenuController():
     def load_an_old_profile(self):
         player_list = Player.load_all_players_from_database()
         self.report_controller.all_players_sorted_alphabetically(player_list)
-        user_input = input("enter a last name : ")
+        user_input = input("enter a player id : ")
         for player in player_list:
-            if player["last_name"] == user_input:
+            if player["player_id"] == user_input:
                 options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
                 self.player_view.display_player_update_options(options)
                 option_index = int(input("Enter a number to select the option: ")) - 1
 
                 if option_index <= len(options):
                     option = options[option_index]
-                    new_value = input(f"Enter {option}: ")
-                    if option == options[4] or options[5]:
-                        new_value = int(new_value)
+                    if option == "score_of_player" or option == "ranking":
+                        new_value = int(input(f"Entrez {option} : "))
+                    elif option == "player_id":
+                        self.menu_view.ergonomics()
+                        self.player_view.non_editable_value()
+                        self.load_an_old_profile()
+                    else:
+                        new_value = input(f"Entrez {option} : ")
+                        print("tata")
 
                     p = Player(
                         player['last_name'],
