@@ -24,6 +24,17 @@ class MenuController():
         self.report_controller = ReportController()
 
     def main_menu_start(self):
+
+        """Starts the main menu and prompts the user to select an option. 
+        Depending on the user's input, it calls one of the following methods:
+        - creation_of_a_new_tournament()
+        - creation_of_a_new_player()
+        - load_an_old_profile()
+        - update_player()
+        - load_an_old_tournament()
+        - report_menu()
+        - exit_the_program()"""
+
         self.menu_view.print_main_menu_options()
         user_input = self.menu_view.enter_a_number_to_select_a_main_menu_option()
         if user_input == 1:
@@ -43,6 +54,15 @@ class MenuController():
             self.exit_the_program()
 
     def creation_of_a_new_player(self):
+        
+        """Prompts the user to enter player information, including their ID, name, date of birth, score, and ranking. 
+        After entering the information, the user is asked to confirm the details before saving the player to the database.
+        If the user confirms the information, the new player is saved, and the user is returned to the main menu. 
+        If the user does not confirm the information, the method starts over and prompts the user to enter the information again.
+
+        @param self: Instance of the class.
+        @return: None."""
+
         player_information = {}
         options = {
             "player_id": "player id",
@@ -90,6 +110,16 @@ class MenuController():
             self.creation_of_a_new_player()
 
     def creation_of_a_new_tournament(self):
+
+        """Create a new tournament by prompting the user to input various pieces of information about it, 
+        including the tournament ID, name, site, number of rounds, current round, general remarks, and list of players.
+        Once all the required information has been gathered and verified, the tournament 
+        is saved to the database and a summary of the new tournament is displayed for the user's review. 
+        If the user confirms the information, the tournament is officially created and the user is prompted to start the tournament.
+
+        @Parameters: None
+        @Return: None"""
+
         tournament_info = {}
         options = {
             "tournament_id": "Tournament ID",
@@ -153,6 +183,11 @@ class MenuController():
             self.creation_of_a_new_tournament()
 
     def update_player(self):
+
+        """Update a player's information in the database.
+        @param self: The object pointer.
+        @return: None."""
+
         players = Player.load_all_players_from_database()
         self.player_view.display_available_players(players)
         player_index = int(input("Enter a number to select the player: ")) - 1
@@ -204,7 +239,28 @@ class MenuController():
         for tournament in tournament_list:
             if user_input == str(tournament["tournament_id"]):
                 selected_tournament = tournament
+                print(selected_tournament["rounds"])
+                print(type(selected_tournament["rounds"]))
+                print(len(selected_tournament["rounds"]))
+                t = Tournament(
+                    selected_tournament['tournament_id'],
+                    selected_tournament['tournament_name'],
+                    selected_tournament['tournament_site'],
+                    selected_tournament['start_date'],
+                    selected_tournament['end_date'],
+                    selected_tournament['number_of_rounds'],
+                    selected_tournament['current_round'],
+                    selected_tournament['general_remarks'],
+                    selected_tournament['rounds'],
+                    selected_tournament['players'],
+                )
+                print("sssssssssssssssssssssssss")
+                print(t.repr())
+                print("ssssssssssssssssssssssssssssssss")
                 a = Tournament.deserialize_tournament(self, selected_tournament)
+                print("~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                print(type(a))
+                # print(a.tournam)
                 self.tournament_controller.start_tournament(a)
 
     def report_menu(self):
@@ -222,6 +278,11 @@ class MenuController():
             self.report_controller.list_all_matches_in_all_rounds(Tournament.load_all_tournaments_from_database(self))
     
     def load_an_old_profile(self):
+
+        """Load an old player profile and allow the user to update the player's information in the database.
+        @param self: The object pointer.
+        @return: None."""
+
         player_list = Player.load_all_players_from_database()
         self.report_controller.all_players_sorted_alphabetically(player_list)
         user_input = input("enter a player id : ")
