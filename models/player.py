@@ -14,6 +14,13 @@ class Player():
         self.players_database = TinyDB("database/players.json", indent=4)
 
     def format_player_in_database(self):
+
+        """
+        Returns the player's information formatted as a dictionary that can be stored in the database.
+        Returns:
+            dict: A dictionary containing the player's information.
+        """
+
         return {"player_id": self.player_id,
                 "first_name": self.first_name,
                 "last_name": self.last_name,
@@ -23,14 +30,35 @@ class Player():
                 "adversary": self.adversary}
 
     def save_player_in_database(self):
+
+        """
+        Inserts the player's information into the players database.
+        Returns: int: The ID of the inserted player in the database.
+        """
+
         return self.players_database.insert(self.format_player_in_database())
 
     @staticmethod
     def load_all_players_from_database():
+        
+        """
+        Loads all players from the players database.
+        Returns: list: A list containing dictionaries of all the players' information.
+        """
+
         players_database = TinyDB('database/players.json')
         players = list(players_database.all())
         return players
 
     def update_player_in_database(self, option, new_value):
+
+        """
+        Updates the player's information in the players database.
+        Args:
+            option (str): The option to be updated.
+            new_value (any): The new value of the option.
+        Returns: None.
+        """
+
         setattr(self, option, new_value)
         self.players_database.update({option: new_value}, where('player_id') == self.player_id)
