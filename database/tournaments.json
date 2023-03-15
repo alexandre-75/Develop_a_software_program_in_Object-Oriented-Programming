@@ -1,0 +1,237 @@
+{
+    "_default": {
+        "1": {
+            "tournament_id": "1",
+            "tournament_name": "t1",
+            "tournament_site": "s1",
+            "start_date": "2023-03-15 13:07:23.688278",
+            "end_date": "2023-03-15 13:08:06.327581",
+            "number_of_rounds": 4,
+            "current_round": 4,
+            "general_remarks": "r",
+            "rounds": [
+                [
+                    "round1",
+                    [
+                        [
+                            "ln1, fn1",
+                            1,
+                            0,
+                            "ln3, fn3",
+                            1,
+                            0
+                        ],
+                        [
+                            "ln2, fn2",
+                            1,
+                            0,
+                            "ls5, fn5",
+                            1,
+                            0
+                        ]
+                    ]
+                ],
+                [
+                    "round 2",
+                    [
+                        [
+                            "ls5, fn5",
+                            1,
+                            0.0,
+                            "ln2, fn2",
+                            1,
+                            0.5
+                        ],
+                        [
+                            "ln1, fn1",
+                            1,
+                            0.5,
+                            "ln3, fn3",
+                            1,
+                            1.0
+                        ]
+                    ]
+                ],
+                [
+                    "round 3",
+                    [
+                        [
+                            "ln1, fn1",
+                            1,
+                            0.5,
+                            "ls5, fn5",
+                            1,
+                            1.0
+                        ],
+                        [
+                            "ln2, fn2",
+                            1,
+                            0.5,
+                            "ln3, fn3",
+                            1,
+                            2.0
+                        ]
+                    ]
+                ],
+                [
+                    "round 4",
+                    [
+                        [
+                            "ln1, fn1",
+                            1,
+                            1.0,
+                            "ls5, fn5",
+                            1,
+                            1.5
+                        ],
+                        [
+                            "ln2, fn2",
+                            1,
+                            1.0,
+                            "ln3, fn3",
+                            1,
+                            2.5
+                        ]
+                    ]
+                ]
+            ],
+            "players": [
+                {
+                    "player_id": "ab123",
+                    "first_name": "fn1",
+                    "last_name": "ln1",
+                    "date_of_birth": "01-01-2000",
+                    "score_of_player": 1.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab125",
+                        "ab125",
+                        "ab127",
+                        "ab127"
+                    ]
+                },
+                {
+                    "player_id": "ab124",
+                    "first_name": "fn2",
+                    "last_name": "ln2",
+                    "date_of_birth": "01-01-2001",
+                    "score_of_player": 1.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab127",
+                        "ab127",
+                        "ab125",
+                        "ab125"
+                    ]
+                },
+                {
+                    "player_id": "ab127",
+                    "first_name": "fn5",
+                    "last_name": "ls5",
+                    "date_of_birth": "01-01-2006",
+                    "score_of_player": 1.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab124",
+                        "ab124",
+                        "ab123",
+                        "ab123"
+                    ]
+                },
+                {
+                    "player_id": "ab125",
+                    "first_name": "fn3",
+                    "last_name": "ln3",
+                    "date_of_birth": "01-01-2002",
+                    "score_of_player": 3.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab123",
+                        "ab123",
+                        "ab124",
+                        "ab124"
+                    ]
+                }
+            ]
+        },
+        "2": {
+            "tournament_id": "2",
+            "tournament_name": "t2",
+            "tournament_site": "s2",
+            "start_date": "2023-03-15 13:15:50.581187",
+            "end_date": "_",
+            "number_of_rounds": 4,
+            "current_round": 1,
+            "general_remarks": "r",
+            "rounds": [
+                [
+                    "round1",
+                    [
+                        [
+                            "ln1, fn1",
+                            1,
+                            0,
+                            "ln3, fn3",
+                            1,
+                            0
+                        ],
+                        [
+                            "ls5, fn5",
+                            1,
+                            0,
+                            "ls4, fn4",
+                            1,
+                            0
+                        ]
+                    ]
+                ]
+            ],
+            "players": [
+                {
+                    "player_id": "ab123",
+                    "first_name": "fn1",
+                    "last_name": "ln1",
+                    "date_of_birth": "01-01-2000",
+                    "score_of_player": 0.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab125"
+                    ]
+                },
+                {
+                    "player_id": "ab127",
+                    "first_name": "fn5",
+                    "last_name": "ls5",
+                    "date_of_birth": "01-01-2006",
+                    "score_of_player": 0.5,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab126"
+                    ]
+                },
+                {
+                    "player_id": "ab125",
+                    "first_name": "fn3",
+                    "last_name": "ln3",
+                    "date_of_birth": "01-01-2002",
+                    "score_of_player": 1.0,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab123"
+                    ]
+                },
+                {
+                    "player_id": "ab126",
+                    "first_name": "fn4",
+                    "last_name": "ls4",
+                    "date_of_birth": "01-01-2004",
+                    "score_of_player": 0.0,
+                    "ranking": 1,
+                    "adversary": [
+                        "ab127"
+                    ]
+                }
+            ]
+        }
+    }
+}

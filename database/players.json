@@ -1,82 +1,46 @@
 {
     "_default": {
         "1": {
-            "player_id": "ab12345",
+            "player_id": "ab123",
             "first_name": "fn1",
-            "last_name": "ls1",
-            "date_of_birth": "01-01-1900",
+            "last_name": "ln1",
+            "date_of_birth": "01-01-2000",
             "score_of_player": 0,
             "ranking": 1,
             "adversary": []
         },
         "2": {
-            "player_id": "ab12456",
+            "player_id": "ab124",
             "first_name": "fn2",
-            "last_name": "ls2",
-            "date_of_birth": "01-01-1901",
+            "last_name": "ln2",
+            "date_of_birth": "01-01-2001",
             "score_of_player": 0,
             "ranking": 1,
             "adversary": []
         },
         "3": {
-            "player_id": "ab12567",
+            "player_id": "ab125",
             "first_name": "fn3",
-            "last_name": "ls3",
-            "date_of_birth": "01-01-1902",
+            "last_name": "ln3",
+            "date_of_birth": "01-01-2002",
             "score_of_player": 0,
             "ranking": 1,
             "adversary": []
         },
         "4": {
-            "player_id": "ab12678",
+            "player_id": "ab126",
             "first_name": "fn4",
             "last_name": "ls4",
-            "date_of_birth": "01-01-1904",
+            "date_of_birth": "01-01-2004",
             "score_of_player": 0,
             "ranking": 1,
             "adversary": []
         },
         "5": {
-            "player_id": "ab12789",
+            "player_id": "ab127",
             "first_name": "fn5",
             "last_name": "ls5",
-            "date_of_birth": "01-01-1905",
-            "score_of_player": 0,
-            "ranking": 1,
-            "adversary": []
-        },
-        "6": {
-            "player_id": "ab12899",
-            "first_name": "fn6",
-            "last_name": "ls6",
-            "date_of_birth": "01-01-1906",
-            "score_of_player": 0,
-            "ranking": 1,
-            "adversary": []
-        },
-        "7": {
-            "player_id": "ab12999",
-            "first_name": "fn7",
-            "last_name": "testultime",
-            "date_of_birth": "01-01-1907",
-            "score_of_player": 0,
-            "ranking": 1,
-            "adversary": []
-        },
-        "8": {
-            "player_id": "ab13000",
-            "first_name": "fn8",
-            "last_name": "ls8",
-            "date_of_birth": "01-01-1908",
-            "score_of_player": 0,
-            "ranking": 1,
-            "adversary": []
-        },
-        "9": {
-            "player_id": "ab78977",
-            "first_name": "ls9",
-            "last_name": "d9",
-            "date_of_birth": "10-28-1278",
+            "date_of_birth": "01-01-2006",
             "score_of_player": 0,
             "ranking": 1,
             "adversary": []

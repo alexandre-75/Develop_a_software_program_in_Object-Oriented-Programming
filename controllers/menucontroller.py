@@ -233,6 +233,18 @@ class MenuController():
             return self.main_menu_start()
 
     def load_an_old_tournament(self):
+
+        """
+        Load an old tournament from the database by asking the user for a tournament ID and
+        creating a Tournament object from the corresponding data in the database.
+
+        Returns:
+        - If a valid tournament ID is entered and a Tournament object is successfully created,
+        returns the result of calling self.tournament_controller.load_tournament with the created
+        Tournament object as an argument.
+        - If an invalid tournament ID is entered or a Tournament object cannot be created, returns tha function.
+        """
+        
         t = None
         tournament_list = Tournament.load_all_tournaments_from_database(self)
         self.tournament_view.select_tournament(tournament_list)
@@ -254,9 +266,9 @@ class MenuController():
                     selected_tournament['rounds'],
                 )
         if t != None:
-
             return self.tournament_controller.load_tournament(t)
-            return print("jacques")
+        else:
+            return self.load_an_old_tournament()
 
     def report_menu(self):
         self.report_view.report_menu()
