@@ -14,13 +14,14 @@ class Tournament():
         self.number_of_rounds = int(number_of_rounds)
         self.current_round = int(current_round)
         self.general_remarks = str(general_remarks)
-        self.rounds = []
-        self.players = []
+        self.rounds = rounds
+        self.players = players
 
         self.tournaments_database = TinyDB('database/tournaments.json', indent=4)
     
     def repr(self):
-        print(self.rounds, self.end_date)
+        print(self.players, self.end_date, self.rounds, self.tournament_site, self.general_remarks)
+        print(f"~~~~~~~{self.current_round}~~~~~~~~~~~~~~~~~~~")
 
     def format_tournament_in_database(self):
 

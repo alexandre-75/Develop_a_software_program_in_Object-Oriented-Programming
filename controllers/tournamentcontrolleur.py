@@ -50,29 +50,41 @@ class TournamentController():
         and displaying a farewell message.
         @param tournament: A dictionary representing the tournament to start.
         """
-
         if tournament.current_round == 1:
+            print("hella")
             tournament.start_date = get_times()
             tournament.update_timer(tournament.start_date, 'start_date', tournament.tournament_id)
             self.round_tournament(tournament, tournament.current_round)
+            print("helliiii")
             tournament.update_tournament_from_database()
             tournament.current_round += 1
+            print("hello")
             while tournament.current_round <= tournament.number_of_rounds:
                 self.next_rounds(tournament)
                 tournament.update_tournament_from_database()
                 tournament.current_round += 1
             tournament.end_date = get_times()
             tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
-            print("tournament finished goodbye")
-        else:
-            1 < tournament.current_round <= tournament.number_of_rounds
-            while tournament.current_round <= tournament.number_of_rounds:
-                #
-                tournament.current_round += 1
-                tournament.update_tournament_from_database()
-            tournament.end_date = get_times()
-            tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
-            print("tournament finished goodbye")
+            return print("tournament finished goodbye")
+
+
+    def load_tournament(self, tournament):
+        tournament.current_round = tournament.current_round + 1
+        while tournament.current_round <= tournament.number_of_rounds:
+            self.next_rounds_2(tournament)
+            tournament.update_tournament_from_database()
+            tournament.current_round = tournament.current_round + 1
+        tournament.end_date = get_times()
+        tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
+        return print("finitoo")
+    #         print(tournament.current_round)
+    #         self.next_rounds(tournament)
+    #         tournament.current_round += 1
+    #         print(tournament.current_round)
+    #         tournament.update_tournament_from_database()
+    #     tournament.end_date = get_times()
+    #     tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
+    #     return print("tournament finished goodbye 4556")
 
     def round_tournament(self, tournament, round_number):
 
@@ -83,8 +95,15 @@ class TournamentController():
         """
 
         round = Round(f"round{round_number}")
+        print("~~~~~~~~~~~~~~~~")
+        print(round)
+        print("~~~~~~~~~~~~~~~~~~~~")
         a = self.selected_players
+        print("hhhhhhhhhhh")
+        print(a)
+        print("hhhhhhhhhhh")
         b = len(a) // 2
+        print(b)
         top_players, bottom_players = tournament.split_players(a)
         for i in range(int(b)):
             round.add_match_to_list(top_players[i], bottom_players[i])
@@ -93,9 +112,12 @@ class TournamentController():
         user_input = str(input("when the round is over enter [a] or else enter [b] ")).lower()
         scores_list = []
         if user_input == "a":
+            print("la ff ")
             tournament.rounds.append(round.all_information_round())
+            print(" la dd")
             self.update_scores_and_return_players(scores_list, tournament)
         elif user_input == "b":
+            self.tournament_view.tournament_registred()
             self.back_to_menu()
 
     @staticmethod
@@ -115,7 +137,7 @@ class TournamentController():
     @staticmethod
     def back_to_menu():
         from controllers.menucontroller import MenuController
-        MenuController().main_menu_start()
+        return MenuController().main_menu_start()
 
     def update_scores_and_return_players(self, scores_list, tournament):
 
@@ -185,7 +207,41 @@ class TournamentController():
             tournament.rounds.append(round.all_information_round())
             self.update_scores_and_return_players(scores_list, tournament)
         elif user_input == "b":
-            self.back_to_menu()
+            
+            self.tournament_view.tournament_registred()
+            return self.back_to_menu()
+
+
+    def next_rounds_2(self, tournament):
+        round = Round("round " + str(tournament.current_round))
+        w = tournament.sort_players_by_score()
+        # a = tournament.players
+        a = len(w)//2
+        top_players, bottom_players = tournament.split_players(w)
+        for i in range(int(a)):
+            round.add_match_to_list(top_players[i], bottom_players[i])
+            top_players[i], bottom_players[i] = self.update_adversary(top_players[i], bottom_players[i])
+        self.round_view.display_matches(round.matches_list)
+        user_input = str(input("when the round is over enter [a] or else enter [b] ")).lower()
+        scores_list = []
+        if user_input == "a":
+            tournament.rounds.append(round.all_information_round())
+            self.update_scores_and_return_players_2(scores_list, tournament)
+        elif user_input == "b":
+            self.tournament_view.tournament_registred()
+            return self.back_to_menu()
+
+        print("qq")
+        # print(a)
+        # print(round.all_information_round())
+        # print(w)
+        # print(top_players)
+        print("xxxxxxxxxxxxxxxxxxxx")
+        # a = tournament.sort_players_by_score()
+        # b = len(a) // 2
+        # top_players, bottom_players = tournament.split_players(a)
+        # for i in range(int(b)):
+        #     round.add_match_to_list(top_players[i], bottom_players[i])
 
     @staticmethod
     def update_player_lists(player_1, player_2, available_list, players_added):
@@ -205,3 +261,22 @@ class TournamentController():
         available_list.remove(player_1)
         available_list.remove(player_2)
         return available_list, players_added
+
+
+    def update_scores_and_return_players_2(self, scores_list, tournament):
+
+        """
+        Updates the scores of the players in a tournament based on user input, and returns the updated player list.
+        @param scores_list: A list of integers representing the scores for each match.
+        @param tournament: A dictionary representing the tournament to update.
+        @return: A list of dictionaries representing the updated player list.
+        """
+
+        a = tournament.players
+        b = len(a) // 2
+        for i in range(int(b)):
+            self.round_view.score_options(i)
+            user_input = input("enter a number [1] [2] or [3] : ")
+            scores_list = self.get_score(user_input, scores_list)
+        tournament.players = self.update_scores_of_players(a, scores_list)
+        return tournament.players

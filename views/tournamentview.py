@@ -90,3 +90,9 @@ class TournamentView():
 
         print("enter the tournament_id at least")
         print("press [b] to exit without creating a tournmanent otherwise press [a] to continue")
+    
+    def tournament_registred(self):
+        print("\n\nyour tournament is correctly registered, you can continue it at any time")
+        print("For that :")
+        print("main menu")
+        print("Load an old tournamen\n\n")

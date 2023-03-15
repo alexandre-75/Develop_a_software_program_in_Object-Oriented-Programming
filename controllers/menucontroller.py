@@ -60,8 +60,7 @@ class MenuController():
         If the user confirms the information, the new player is saved, and the user is returned to the main menu. 
         If the user does not confirm the information, the method starts over and prompts the user to enter the information again.
 
-        @param self: Instance of the class.
-        @return: None."""
+        @param self: Instance of the class."""
 
         player_information = {}
         options = {
@@ -86,7 +85,8 @@ class MenuController():
                     self.player_view.exit_player_creation_or_continue()
                     user_input = input()
                     if user_input == "b":
-                        self.main_menu_start()
+                        return self.main_menu_start()
+                        break
                     else:
                         self.creation_of_a_new_player()
                 else:
@@ -94,7 +94,8 @@ class MenuController():
                     player.save_player_in_database()
                     self.menu_view.ergonomics()
                     self.player_view.player_message_is_saved_in_the_database()
-                    self.main_menu_start()
+                    return self.main_menu_start()
+                    break
             else:
                 player_information[key] = user_input
         self.player_view.summary_of_new_player_created(player_information)
@@ -105,9 +106,9 @@ class MenuController():
             player.save_player_in_database()
             self.player_view.player_message_is_saved_in_the_database()
             self.menu_view.ergonomics()
-            self.main_menu_start()
+            return self.main_menu_start()
         else:
-            self.creation_of_a_new_player()
+            return self.creation_of_a_new_player()
 
     def creation_of_a_new_tournament(self):
 
@@ -117,8 +118,7 @@ class MenuController():
         is saved to the database and a summary of the new tournament is displayed for the user's review. 
         If the user confirms the information, the tournament is officially created and the user is prompted to start the tournament.
 
-        @Parameters: None
-        @Return: None"""
+        @Parameters: None"""
 
         tournament_info = {}
         options = {
@@ -143,17 +143,18 @@ class MenuController():
                     self.tournament_view.exit_tournament_creation_or_continue()
                     user_input = input()
                     if user_input == "b":
-                        self.main_menu_start()
+                        return self.main_menu_start()
                     else:
-                        self.creation_of_a_new_tournament()
+                        return self.creation_of_a_new_tournament()
                 else:
                     tournament = Tournament(**tournament_info)
                     tournament.save_tournament_in_database()
                     self.tournament_view.tournament_message_is_saved_in_the_database()
-                    self.main_menu_start()
+                    return self.main_menu_start()
             else:
                 tournament_info[key] = user_input
         player_present_in_the_tournament = self.tournament_controller.select_player_list(4)
+        self.menu_view.ergonomics()
         self.tournament_view.summary_of_new_tournament_created(tournament_info, player_present_in_the_tournament)
 
         user_input = input("Do you confirm tournament information? (YES or NO) : ").lower()
@@ -176,11 +177,11 @@ class MenuController():
             user_input = input().lower()
             if user_input == "yes":
                 self.tournament_controller.start_tournament(tournament)
-                pass
+                return self.main_menu_start()
             elif user_input == "no":
-                self.main_menu_start()
+                return self.main_menu_start()
         else:
-            self.creation_of_a_new_tournament()
+             return self.creation_of_a_new_tournament()
 
     def update_player(self):
 
@@ -203,7 +204,7 @@ class MenuController():
         options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
         self.player_view.display_player_update_options(options)
         option_index = int(input("Enter a number to select the option: ")) - 1
-        new_value = None  # initialiser à None
+        new_value = None 
         if option_index <= len(options):
             option = options[option_index]
             if option == "score_of_player" or option == "ranking":
@@ -212,26 +213,27 @@ class MenuController():
                 self.menu_view.ergonomics()
                 self.player_view.non_editable_value()
                 self.update_player()
-                return  # sauter le reste de la méthode
+                return 
             else:
                 new_value = input(f"Entrez {option} : ")
             p.update_player_in_database(option, new_value)
             self.player_view.player_message_is_saved_in_the_database()
-            self.main_menu_start()
+            return self.main_menu_start()
         else:
             self.player_view.player_message_not_saved_in_the_database()
-            self.update_player()
+            return self.update_player()
 
     def exit_the_program(self):
         self.menu_view.quit_the_program_now()
         user_input = str(input()).lower()
         if user_input == "yes":
-            exit()
+            return exit()
         else:
             user_input == "no"
-            self.main_menu_start()
+            return self.main_menu_start()
 
     def load_an_old_tournament(self):
+        t = None
         tournament_list = Tournament.load_all_tournaments_from_database(self)
         self.tournament_view.select_tournament(tournament_list)
         user_input = str(input("enter a tournament ID : "))
@@ -239,9 +241,6 @@ class MenuController():
         for tournament in tournament_list:
             if user_input == str(tournament["tournament_id"]):
                 selected_tournament = tournament
-                print(selected_tournament["rounds"])
-                print(type(selected_tournament["rounds"]))
-                print(len(selected_tournament["rounds"]))
                 t = Tournament(
                     selected_tournament['tournament_id'],
                     selected_tournament['tournament_name'],
@@ -251,17 +250,13 @@ class MenuController():
                     selected_tournament['number_of_rounds'],
                     selected_tournament['current_round'],
                     selected_tournament['general_remarks'],
-                    selected_tournament['rounds'],
                     selected_tournament['players'],
+                    selected_tournament['rounds'],
                 )
-                print("sssssssssssssssssssssssss")
-                print(t.repr())
-                print("ssssssssssssssssssssssssssssssss")
-                a = Tournament.deserialize_tournament(self, selected_tournament)
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print(type(a))
-                # print(a.tournam)
-                self.tournament_controller.start_tournament(a)
+        if t != None:
+
+            return self.tournament_controller.load_tournament(t)
+            return print("jacques")
 
     def report_menu(self):
         self.report_view.report_menu()
@@ -273,7 +268,7 @@ class MenuController():
         if user_input == 3:
             self.report_controller.name_and_dates_of_a_tournament(Tournament.load_all_tournaments_from_database(self))
         if user_input == 4:
-            self.report_controller.list_of_tournament(Tournament.load_all_tournaments_from_database(self))
+            self.report_controller.list_of_tournament_players(Tournament.load_all_tournaments_from_database(self))
         if user_input == 5:
             self.report_controller.list_all_matches_in_all_rounds(Tournament.load_all_tournaments_from_database(self))
     
