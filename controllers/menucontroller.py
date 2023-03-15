@@ -25,7 +25,7 @@ class MenuController():
 
     def main_menu_start(self):
 
-        """Starts the main menu and prompts the user to select an option. 
+        """Starts the main menu and prompts the user to select an option.
         Depending on the user's input, it calls one of the following methods:
         - creation_of_a_new_tournament()
         - creation_of_a_new_player()
@@ -54,11 +54,13 @@ class MenuController():
             self.exit_the_program()
 
     def creation_of_a_new_player(self):
-        
-        """Prompts the user to enter player information, including their ID, name, date of birth, score, and ranking. 
-        After entering the information, the user is asked to confirm the details before saving the player to the database.
-        If the user confirms the information, the new player is saved, and the user is returned to the main menu. 
-        If the user does not confirm the information, the method starts over and prompts the user to enter the information again.
+
+        """Prompts the user to enter player information, including their ID, name, date of birth, score, and ranking.
+        After entering the information, the user is asked to confirm the details,
+        before saving the player to the database.
+        If the user confirms the information, the new player is saved, and the user is returned to the main menu.
+        If the user does not confirm the information,
+        the method starts over and prompts the user to enter the information again.
 
         @param self: Instance of the class."""
 
@@ -112,11 +114,12 @@ class MenuController():
 
     def creation_of_a_new_tournament(self):
 
-        """Create a new tournament by prompting the user to input various pieces of information about it, 
+        """Create a new tournament by prompting the user to input various pieces of information about it,
         including the tournament ID, name, site, number of rounds, current round, general remarks, and list of players.
-        Once all the required information has been gathered and verified, the tournament 
-        is saved to the database and a summary of the new tournament is displayed for the user's review. 
-        If the user confirms the information, the tournament is officially created and the user is prompted to start the tournament.
+        Once all the required information has been gathered and verified, the tournament
+        is saved to the database and a summary of the new tournament is displayed for the user's review.
+        If the user confirms the information, the tournament is officially created
+        and the user is prompted to start the tournament.
 
         @Parameters: None"""
 
@@ -136,7 +139,7 @@ class MenuController():
                 pass
             else:
                 self.player_view.exit_save_player()
-            user_input =""
+            user_input = ""
             user_input = input(f"{value}: ").lower()
             if user_input == "quit":
                 if value == "Tournament ID":
@@ -181,7 +184,7 @@ class MenuController():
             elif user_input == "no":
                 return self.main_menu_start()
         else:
-             return self.creation_of_a_new_tournament()
+            return self.creation_of_a_new_tournament()
 
     def update_player(self):
 
@@ -204,7 +207,7 @@ class MenuController():
         options = ["last_name", "first_name", "date_of_birth", "player_id", "score_of_player", "ranking"]
         self.player_view.display_player_update_options(options)
         option_index = int(input("Enter a number to select the option: ")) - 1
-        new_value = None 
+        new_value = None
         if option_index <= len(options):
             option = options[option_index]
             if option == "score_of_player" or option == "ranking":
@@ -213,7 +216,7 @@ class MenuController():
                 self.menu_view.ergonomics()
                 self.player_view.non_editable_value()
                 self.update_player()
-                return 
+                return
             else:
                 new_value = input(f"Entrez {option} : ")
             p.update_player_in_database(option, new_value)
@@ -244,7 +247,7 @@ class MenuController():
         Tournament object as an argument.
         - If an invalid tournament ID is entered or a Tournament object cannot be created, returns tha function.
         """
-        
+
         t = None
         tournament_list = Tournament.load_all_tournaments_from_database(self)
         self.tournament_view.select_tournament(tournament_list)
@@ -265,10 +268,7 @@ class MenuController():
                     selected_tournament['players'],
                     selected_tournament['rounds'],
                 )
-        if t != None:
             return self.tournament_controller.load_tournament(t)
-        else:
-            return self.load_an_old_tournament()
 
     def report_menu(self):
         self.report_view.report_menu()
@@ -283,7 +283,7 @@ class MenuController():
             self.report_controller.list_of_tournament_players(Tournament.load_all_tournaments_from_database(self))
         if user_input == 5:
             self.report_controller.list_all_matches_in_all_rounds(Tournament.load_all_tournaments_from_database(self))
-    
+
     def load_an_old_profile(self):
 
         """Load an old player profile and allow the user to update the player's information in the database.

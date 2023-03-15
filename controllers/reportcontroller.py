@@ -31,7 +31,7 @@ class ReportController():
         self.report_view.display_all_tournaments_report(tournaments)
 
     def name_and_dates_of_a_tournament(self, tournaments):
-        
+
         """Display the name and dates of a tournament.
         @param self: The object pointer.
         @param tournaments: A list of tournament dictionaries.

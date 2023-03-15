@@ -63,7 +63,7 @@ class TournamentController():
             tournament.end_date = get_times()
             tournament.update_timer(tournament.end_date, 'end_date', tournament.tournament_id)
             return print("tournament finished goodbye")
-        
+
     def round_tournament(self, tournament, round_number):
 
         """
@@ -88,7 +88,7 @@ class TournamentController():
         elif user_input == "b":
             self.tournament_view.tournament_registred()
             self.back_to_menu()
-    
+
     def next_rounds(self, tournament):
 
         """
@@ -113,7 +113,7 @@ class TournamentController():
         elif user_input == "b":
             self.tournament_view.tournament_registred()
             return self.back_to_menu()
-    
+
     def update_scores_and_return_players(self, scores_list, tournament):
 
         """
@@ -158,7 +158,7 @@ class TournamentController():
         elif user_input == "b":
             self.tournament_view.tournament_registred()
             return self.back_to_menu()
-    
+
     def update_scores_and_return_players_2(self, scores_list, tournament):
 
         """
@@ -199,7 +199,7 @@ class TournamentController():
     def get_score(self, user_input, scores_list):
 
         """
-        Given user input, updates a list of scores with the appropriate score based on the input.    
+        Given user input, updates a list of scores with the appropriate score based on the input.
         @param user_input: A string representing the user's input for the score.
         @param scores_list: A list of integers representing the scores for each match.
         @return: A list of integers representing the updated scores.
@@ -214,7 +214,7 @@ class TournamentController():
 
         """
         Updates the scores of players based on the scores in the provided list.
-        
+
         @param players: A list of dictionaries representing the players.
         @param scores_list: A list of integers representing the scores for each match.
         @return: A list of dictionaries representing the updated players.
@@ -237,7 +237,7 @@ class TournamentController():
         Returns:
         tuple: A tuple containing the updated available list and the list of players added.
         """
-        
+
         players_added.extend([player_1, player_2])
         available_list.remove(player_1)
         available_list.remove(player_2)

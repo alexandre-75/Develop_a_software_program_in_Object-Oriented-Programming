@@ -8,7 +8,7 @@ class MainMenu():
         """
         Prints the options available in the main menu.
         """
-        
+
         print("Welcome to the main menu!")
         print("What would you like to do? Select the desired option by entering its number:")
         print("""
@@ -69,7 +69,7 @@ class MainMenu():
 
         user_choice = input("select the desired ID : ")
         return user_choice
-    
+
     def ergonomics(self):
 
         """

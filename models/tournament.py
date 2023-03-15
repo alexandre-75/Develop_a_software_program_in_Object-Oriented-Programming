@@ -104,7 +104,7 @@ class Tournament():
         """
         Updates a tournament record in the database with the current state of the Tournament instance.
         """
-        
+
         db = self.tournaments_database
         db.update({'rounds': self.rounds}, where('tournament_id') == self.tournament_id)
         db.update({'players': self.players}, where('tournament_id') == self.tournament_id)

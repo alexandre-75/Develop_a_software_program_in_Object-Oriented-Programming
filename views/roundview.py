@@ -22,12 +22,12 @@ class RoundView():
          Displays a PrettyTable table with the matches passed as parameters. Each line represents a match
          with match number, player 1 name, ranking, score, "vs.", player 2 name,
          their ranking and score.
-        
+
          args:
              matches (list): A list of tuples, each tuple contains the information of a match
                              (name of players, ranking, score).
          """
-         
+
         self.table.clear()
         self.table.field_names = self.round_field_names
         for i in range(len(matches)):
@@ -41,7 +41,7 @@ class RoundView():
 
         """
          Displays scoring options for a given match.
-        
+
          args:
              match_number (int): The match number to display scoring options for.
          """

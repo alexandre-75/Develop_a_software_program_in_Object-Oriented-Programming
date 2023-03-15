@@ -7,7 +7,7 @@ class TournamentView():
 
         """
         Print a summary of a new tournament that has been created.
-        
+
         Args:
             info (dict): A dictionary containing information about the new tournament.
             players (list): A list of players in the tournament.
@@ -52,7 +52,7 @@ class TournamentView():
 
         """
         Print a table of all tournaments in a list.
-        
+
         Args:
             tournaments_list (list): A list of dictionaries containing information about tournaments.
         """
@@ -90,7 +90,7 @@ class TournamentView():
 
         print("enter the tournament_id at least")
         print("press [b] to exit without creating a tournmanent otherwise press [a] to continue")
-    
+
     def tournament_registred(self):
         print("\n\nyour tournament is correctly registered, you can continue it at any time")
         print("For that :")

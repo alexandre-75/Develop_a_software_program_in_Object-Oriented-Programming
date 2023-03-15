@@ -58,7 +58,7 @@ class PlayerView():
 
         for i, option in enumerate(options):
             print(f"[{i+1}] Update {option}")
-    
+
     def exit_save_player(self):
 
         """
@@ -77,7 +77,7 @@ class PlayerView():
 
         print("enter the player_id at least")
         print("press [b] to exit without creating a player otherwise press [a] to continue")
-    
+
     def non_editable_value(self):
 
         """

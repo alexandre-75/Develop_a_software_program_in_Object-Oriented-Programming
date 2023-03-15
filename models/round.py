@@ -31,5 +31,5 @@ class Round:
         Args: None.
         Returns: list: A list of the round name and matches list.
         """
-        
+
         return [self.round_name, self.matches_list]

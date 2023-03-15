@@ -40,7 +40,7 @@ class Player():
 
     @staticmethod
     def load_all_players_from_database():
-        
+
         """
         Loads all players from the players database.
         Returns: list: A list containing dictionaries of all the players' information.
