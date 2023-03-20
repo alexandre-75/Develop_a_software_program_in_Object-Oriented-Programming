@@ -268,7 +268,7 @@ class MenuController():
                     selected_tournament['players'],
                     selected_tournament['rounds'],
                 )
-            return self.tournament_controller.load_tournament(t)
+                return self.tournament_controller.load_tournament(t)
 
     def report_menu(self):
         self.report_view.report_menu()
